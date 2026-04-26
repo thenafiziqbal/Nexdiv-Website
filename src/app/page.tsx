@@ -1,101 +1,111 @@
-import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { Hero } from "@/components/Hero";
+import { FeatureSlider } from "@/components/FeatureSlider";
+import { Section, SectionHeader } from "@/components/Section";
+import { ServiceCard } from "@/components/ServiceCard";
+import { ToolCard } from "@/components/ToolCard";
+import { PackageCard } from "@/components/PackageCard";
+import { services } from "@/data/services";
+import { tools } from "@/data/tools";
+import { packages } from "@/data/packages";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <>
+      <Hero />
+      <FeatureSlider />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      <Section id="services">
+        <SectionHeader
+          eyebrow="What we do"
+          title="Services that drive growth"
+          subtitle="From a sleek landing page to a multi-tenant SaaS — Nexdiv ships modern, scalable, futuristic products."
+        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {services.slice(0, 6).map((s, i) => (
+            <ServiceCard key={s.slug} service={s} index={i} />
+          ))}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        <div className="mt-10 text-center">
+          <Link
+            href="/services"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl glass-strong text-sm font-semibold text-white hover:bg-brand-blue/20"
+          >
+            See all services <ArrowRight size={14} />
+          </Link>
+        </div>
+      </Section>
+
+      <Section id="tools">
+        <SectionHeader
+          eyebrow="Our products"
+          title="AI tools & SaaS we built"
+          subtitle="Production AI agents, SaaS platforms, and browser extensions — try them live."
+        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {tools.slice(0, 3).map((t, i) => (
+            <ToolCard key={t.slug} tool={t} index={i} />
+          ))}
+        </div>
+        <div className="mt-10 text-center">
+          <Link
+            href="/tools"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl glass-strong text-sm font-semibold text-white hover:bg-brand-blue/20"
+          >
+            Explore all products <ArrowRight size={14} />
+          </Link>
+        </div>
+      </Section>
+
+      <Section id="packages">
+        <SectionHeader
+          eyebrow="Pricing"
+          title="Packages built for every stage"
+          subtitle="Transparent pricing. No hidden fees. Pick a package or tell us what you need — we'll customize."
+        />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {packages.filter((p) => p.category === "Website").map((p, i) => (
+            <PackageCard key={p.slug} pkg={p} index={i} />
+          ))}
+        </div>
+        <div className="mt-10 text-center">
+          <Link
+            href="/packages"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl glass-strong text-sm font-semibold text-white hover:bg-brand-blue/20"
+          >
+            See all packages <ArrowRight size={14} />
+          </Link>
+        </div>
+      </Section>
+
+      <Section>
+        <div className="relative rounded-3xl overflow-hidden glass-strong neon-border">
+          <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/30 via-brand-mint/15 to-brand-neon/20" />
+          <div className="relative p-8 sm:p-14 text-center">
+            <h3 className="text-3xl sm:text-5xl font-black tracking-tight">
+              Ready to build something <span className="neon-text">extraordinary?</span>
+            </h3>
+            <p className="mt-4 text-white/70 max-w-2xl mx-auto">
+              Tell us about your idea, your goals, your dream — we&apos;ll come back with a plan, a price, and a deadline.
+            </p>
+            <div className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-brand-blue to-brand-mint text-brand-night font-semibold animate-glow"
+              >
+                Start a project <ArrowRight size={16} />
+              </Link>
+              <Link
+                href="/payment"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass-strong text-white font-semibold hover:bg-brand-blue/20"
+              >
+                Make a payment
+              </Link>
+            </div>
+          </div>
+        </div>
+      </Section>
+    </>
   );
 }

@@ -1,0 +1,166 @@
+export type Package = {
+  slug: string;
+  name: string;
+  category: "Website" | "E-commerce" | "Marketing" | "AI";
+  pages: number | "unlimited";
+  price: number;
+  currency: string;
+  popular?: boolean;
+  features: string[];
+  delivery: string;
+};
+
+export const packages: Package[] = [
+  {
+    slug: "starter-website",
+    name: "Starter Website",
+    category: "Website",
+    pages: 5,
+    price: 15000,
+    currency: "BDT",
+    features: [
+      "Up to 5 pages",
+      "Mobile responsive",
+      "Basic SEO",
+      "Contact form",
+      "Free SSL",
+      "1 month support",
+    ],
+    delivery: "7 days",
+  },
+  {
+    slug: "business-website",
+    name: "Business Website",
+    category: "Website",
+    pages: 10,
+    price: 35000,
+    currency: "BDT",
+    popular: true,
+    features: [
+      "Up to 10 pages",
+      "Custom design",
+      "Blog / CMS",
+      "Advanced SEO",
+      "WhatsApp + chat integration",
+      "3 months support",
+    ],
+    delivery: "14 days",
+  },
+  {
+    slug: "premium-website",
+    name: "Premium Website",
+    category: "Website",
+    pages: "unlimited",
+    price: 75000,
+    currency: "BDT",
+    features: [
+      "Unlimited pages",
+      "Premium animations / 3D",
+      "Multilingual",
+      "AI chatbot included",
+      "Performance + SEO suite",
+      "12 months support",
+    ],
+    delivery: "21 days",
+  },
+  {
+    slug: "ecommerce-starter",
+    name: "E-commerce Starter",
+    category: "E-commerce",
+    pages: 8,
+    price: 45000,
+    currency: "BDT",
+    features: [
+      "Up to 50 products",
+      "bKash + Nagad + COD",
+      "Order dashboard",
+      "Customer accounts",
+      "1 free template",
+      "3 months support",
+    ],
+    delivery: "14 days",
+  },
+  {
+    slug: "ecommerce-pro",
+    name: "E-commerce Pro",
+    category: "E-commerce",
+    pages: "unlimited",
+    price: 95000,
+    currency: "BDT",
+    popular: true,
+    features: [
+      "Unlimited products",
+      "Multi-vendor support",
+      "Inventory + warehouse",
+      "Marketing automation",
+      "Mobile app (PWA)",
+      "12 months support",
+    ],
+    delivery: "30 days",
+  },
+  {
+    slug: "smm-basic",
+    name: "Social Media — Basic",
+    category: "Marketing",
+    pages: 0,
+    price: 12000,
+    currency: "BDT",
+    features: [
+      "12 posts / month",
+      "Facebook + Instagram",
+      "Basic ad management (৳5k budget)",
+      "Monthly report",
+    ],
+    delivery: "Monthly",
+  },
+  {
+    slug: "smm-growth",
+    name: "Social Media — Growth",
+    category: "Marketing",
+    pages: 0,
+    price: 28000,
+    currency: "BDT",
+    features: [
+      "30 posts / month",
+      "FB + IG + TikTok",
+      "Ad management (৳15k budget incl.)",
+      "Influencer outreach",
+      "Weekly report",
+    ],
+    delivery: "Monthly",
+  },
+  {
+    slug: "ai-chatbot-package",
+    name: "AI Chatbot Package",
+    category: "AI",
+    pages: 0,
+    price: 25000,
+    currency: "BDT",
+    features: [
+      "Trained on your data",
+      "Bangla + English",
+      "Web + Messenger + WhatsApp",
+      "Admin dashboard",
+      "3 months free updates",
+    ],
+    delivery: "10 days",
+  },
+  {
+    slug: "ai-agent-custom",
+    name: "Custom AI Agent",
+    category: "AI",
+    pages: 0,
+    price: 80000,
+    currency: "BDT",
+    popular: true,
+    features: [
+      "Fully custom-built agent",
+      "Multi-step reasoning",
+      "Tool / API access",
+      "RAG over your knowledge base",
+      "Voice + text",
+      "12 months support",
+    ],
+    delivery: "30 days",
+  },
+];
