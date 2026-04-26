@@ -10,7 +10,8 @@ browser extensions and digital marketing.
 - **Tailwind CSS** with custom blue + neon-green futuristic theme
 - **Framer Motion** for smooth, futuristic animations
 - **lucide-react** icons
-- API routes (Next.js Route Handlers) for contact + payment submission
+- API routes
+- (Next.js Route Handlers) for contact + payment submission
 
 ## Pages
 
