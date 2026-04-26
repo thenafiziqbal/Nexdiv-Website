@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, Play } from "lucide-react";
-import { siteConfig } from "@/lib/site";
+import { useSettings } from "@/hooks/useSettings";
 
 export function Hero() {
+  const s = useSettings();
+
   return (
     <section className="relative pt-28 sm:pt-36 pb-12 sm:pb-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
@@ -17,7 +19,7 @@ export function Hero() {
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-xs sm:text-sm font-medium text-white/80 mb-6"
           >
             <Sparkles size={14} className="text-brand-neon" />
-            <span>Future-ready Digital Agency · Web · AI · SaaS</span>
+            <span>{s.tagline} · Web · AI · SaaS</span>
           </motion.div>
 
           <motion.h1
@@ -36,8 +38,7 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.15 }}
             className="mt-6 text-base sm:text-lg text-white/70 max-w-2xl mx-auto leading-relaxed"
           >
-            Websites, e-commerce, browser extensions, custom AI agents and SaaS products —
-            crafted with futuristic design, smooth motion, and real-world results.
+            {s.description}
           </motion.p>
 
           <motion.div
@@ -72,18 +73,17 @@ export function Hero() {
               { v: "120+", l: "Projects shipped" },
               { v: "60+", l: "Happy clients" },
               { v: "8+", l: "AI products" },
-            ].map((s) => (
-              <div key={s.l} className="glass rounded-xl py-3 sm:py-4">
-                <div className="text-xl sm:text-3xl font-black neon-text">{s.v}</div>
+            ].map((stat) => (
+              <div key={stat.l} className="glass rounded-xl py-3 sm:py-4">
+                <div className="text-xl sm:text-3xl font-black neon-text">{stat.v}</div>
                 <div className="text-[11px] sm:text-xs uppercase tracking-wider text-white/60 mt-1">
-                  {s.l}
+                  {stat.l}
                 </div>
               </div>
             ))}
           </motion.div>
         </div>
 
-        {/* Hero video card */}
         <motion.div
           initial={{ opacity: 0, scale: 0.94, y: 40 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -94,29 +94,23 @@ export function Hero() {
           <div className="relative glass-strong rounded-3xl overflow-hidden neon-border">
             <div className="aspect-video w-full relative">
               <video
+                key={s.hero.video}
                 className="w-full h-full object-cover"
                 autoPlay
                 muted
                 loop
                 playsInline
-                poster={siteConfig.heroPoster}
+                poster={s.hero.poster}
               >
-                <source src={siteConfig.heroVideo} type="video/mp4" />
+                <source src={s.hero.video} type="video/mp4" />
               </video>
               <div className="absolute inset-0 bg-gradient-to-t from-brand-night/80 via-brand-night/20 to-transparent pointer-events-none" />
               <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
                 <div>
-                  <p className="text-xs uppercase tracking-widest text-brand-neon font-semibold">
-                    Live preview
-                  </p>
-                  <p className="text-sm sm:text-base text-white/90 font-medium">
-                    Nexdiv Showreel · Featured projects
-                  </p>
+                  <p className="text-xs uppercase tracking-widest text-brand-neon font-semibold">Live preview</p>
+                  <p className="text-sm sm:text-base text-white/90 font-medium">{s.siteName} Showreel · Featured projects</p>
                 </div>
-                <Link
-                  href="/tools"
-                  className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-lg glass-strong text-sm font-semibold text-white hover:bg-brand-blue/20"
-                >
+                <Link href="/tools" className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-lg glass-strong text-sm font-semibold text-white hover:bg-brand-blue/20">
                   See products <ArrowRight size={14} />
                 </Link>
               </div>

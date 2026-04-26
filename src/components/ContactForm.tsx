@@ -14,12 +14,8 @@ export function ContactForm() {
     const fd = new FormData(e.currentTarget);
     const data = Object.fromEntries(fd.entries());
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      if (!res.ok) throw new Error("Failed to send");
+      const { createItem } = await import("@/lib/firebase-data");
+      await createItem("messages", { ...data, read: false, createdAt: Date.now() });
       setStatus("success");
       e.currentTarget.reset();
     } catch (err) {

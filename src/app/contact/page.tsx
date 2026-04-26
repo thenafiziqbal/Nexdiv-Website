@@ -1,15 +1,12 @@
-import type { Metadata } from "next";
+"use client";
+
 import { Mail, Phone, MapPin, MessageSquare } from "lucide-react";
 import { Section, SectionHeader } from "@/components/Section";
 import { ContactForm } from "@/components/ContactForm";
-import { siteConfig } from "@/lib/site";
-
-export const metadata: Metadata = {
-  title: "Contact",
-  description: "Get in touch with Nexdiv.",
-};
+import { useSettings } from "@/hooks/useSettings";
 
 export default function ContactPage() {
+  const settings = useSettings();
   return (
     <Section className="pt-32">
       <SectionHeader
@@ -25,8 +22,8 @@ export default function ContactPage() {
               <Mail size={18} />
             </span>
             <h4 className="font-bold text-white">Email</h4>
-            <a href={`mailto:${siteConfig.email}`} className="text-sm text-white/70 hover:text-brand-neon">
-              {siteConfig.email}
+            <a href={`mailto:${settings.contact.email}`} className="text-sm text-white/70 hover:text-brand-neon">
+              {settings.contact.email}
             </a>
           </div>
           <div className="rounded-2xl glass-strong p-6 neon-border">
@@ -34,8 +31,8 @@ export default function ContactPage() {
               <Phone size={18} />
             </span>
             <h4 className="font-bold text-white">Phone</h4>
-            <a href={`tel:${siteConfig.phone}`} className="text-sm text-white/70 hover:text-brand-neon">
-              {siteConfig.phone}
+            <a href={`tel:${settings.contact.phone}`} className="text-sm text-white/70 hover:text-brand-neon">
+              {settings.contact.phone}
             </a>
           </div>
           <div className="rounded-2xl glass-strong p-6 neon-border">
@@ -44,12 +41,12 @@ export default function ContactPage() {
             </span>
             <h4 className="font-bold text-white">WhatsApp</h4>
             <a
-              href={`https://wa.me/${siteConfig.whatsapp.replace(/\D/g, "")}`}
+              href={`https://wa.me/${settings.contact.whatsapp.replace(/\D/g, "")}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm text-white/70 hover:text-brand-neon"
             >
-              {siteConfig.whatsapp}
+              {settings.contact.whatsapp}
             </a>
           </div>
           <div className="rounded-2xl glass-strong p-6 neon-border">
@@ -57,7 +54,7 @@ export default function ContactPage() {
               <MapPin size={18} />
             </span>
             <h4 className="font-bold text-white">Office</h4>
-            <p className="text-sm text-white/70">{siteConfig.address}</p>
+            <p className="text-sm text-white/70">{settings.contact.address}</p>
           </div>
         </aside>
 

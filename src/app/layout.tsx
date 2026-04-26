@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { Background } from "@/components/Background";
-import { NoticeBar } from "@/components/NoticeBar";
+import { SiteShell } from "@/components/SiteShell";
+import { AuthProvider } from "@/contexts/AuthContext";
 import { siteConfig } from "@/lib/site";
 
 const geistSans = localFont({
@@ -31,7 +29,6 @@ export const metadata: Metadata = {
     "SaaS",
     "browser extension",
     "Bangladesh",
-    "Bondhu",
     "Nexdiv",
   ],
   openGraph: {
@@ -48,14 +45,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
-      >
-        <Background video={siteConfig.heroVideo} />
-        <NoticeBar message="🚀 Launch offer: 20% off on all website packages — limited time!" />
-        <Navbar />
-        <main className="relative">{children}</main>
-        <Footer />
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}>
+        <AuthProvider>
+          <SiteShell>{children}</SiteShell>
+        </AuthProvider>
       </body>
     </html>
   );

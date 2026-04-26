@@ -1,17 +1,17 @@
-import type { Metadata } from "next";
+"use client";
+
 import { Suspense } from "react";
 import { Section, SectionHeader } from "@/components/Section";
 import { PaymentForm } from "@/components/PaymentForm";
-import { siteConfig } from "@/lib/site";
-import { packages } from "@/data/packages";
-import { services } from "@/data/services";
-
-export const metadata: Metadata = {
-  title: "Payment",
-  description: "Pay for your Nexdiv package or service.",
-};
+import { useSettings } from "@/hooks/useSettings";
+import { usePackages } from "@/hooks/useContent";
+import { useServices } from "@/hooks/useContent";
 
 export default function PaymentPage() {
+  const settings = useSettings();
+  const packages = usePackages();
+  const services = useServices();
+
   return (
     <Section className="pt-32">
       <SectionHeader
@@ -24,28 +24,28 @@ export default function PaymentPage() {
         <aside className="lg:col-span-1 space-y-4">
           <Method
             label="bKash"
-            number={siteConfig.payment.bkash}
+            number={settings.payment.bkash}
             instruction="Send Money → use our bKash number → copy TrxID below"
             color="from-pink-500/30 to-rose-500/20"
           />
           <Method
             label="Nagad"
-            number={siteConfig.payment.nagad}
+            number={settings.payment.nagad}
             instruction="Send Money → use our Nagad number → copy TrxID below"
             color="from-orange-500/30 to-yellow-500/20"
           />
           <Method
             label="Rocket"
-            number={siteConfig.payment.rocket}
+            number={settings.payment.rocket}
             instruction="Send Money → use our Rocket number → copy TrxID below"
             color="from-purple-500/30 to-violet-500/20"
           />
           <div className="rounded-2xl glass-strong p-6 neon-border">
             <h4 className="font-bold text-white">Bank Transfer</h4>
             <p className="mt-2 text-sm text-white/70">
-              <span className="block">{siteConfig.payment.bank.name}</span>
-              <span className="block">A/C: {siteConfig.payment.bank.account}</span>
-              <span className="block">Branch: {siteConfig.payment.bank.branch}</span>
+              <span className="block">{settings.payment.bankName}</span>
+              <span className="block">A/C: {settings.payment.bankAccount}</span>
+              <span className="block">Branch: {settings.payment.bankBranch}</span>
             </p>
           </div>
         </aside>

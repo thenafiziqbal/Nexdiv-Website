@@ -1,15 +1,12 @@
-import type { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
 import { ExternalLink, Play, Check } from "lucide-react";
 import { Section, SectionHeader } from "@/components/Section";
-import { tools } from "@/data/tools";
-
-export const metadata: Metadata = {
-  title: "Tools & SaaS",
-  description: "AI agents, AI tools, SaaS products, and browser extensions built by Nexdiv.",
-};
+import { useTools } from "@/hooks/useContent";
 
 export default function ToolsPage() {
+  const tools = useTools();
   return (
     <Section className="pt-32">
       <SectionHeader
@@ -27,8 +24,10 @@ export default function ToolsPage() {
           >
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-0">
               <div className="relative aspect-video lg:aspect-auto lg:col-span-2 min-h-[260px]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={t.cover} alt={t.name} className="absolute inset-0 w-full h-full object-cover" />
+                {t.cover && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={t.cover} alt={t.name} className="absolute inset-0 w-full h-full object-cover" />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-brand-night via-brand-night/50 to-transparent" />
                 <span className="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest bg-brand-neon/20 text-brand-neon border border-brand-neon/40">
                   {t.category}
@@ -43,7 +42,7 @@ export default function ToolsPage() {
                 <p className="mt-3 text-white/75 leading-relaxed">{t.description}</p>
 
                 <ul className="mt-5 grid sm:grid-cols-2 gap-2">
-                  {t.features.map((f) => (
+                  {(t.features ?? []).map((f) => (
                     <li key={f} className="text-sm text-white/80 flex items-start gap-2">
                       <span className="mt-0.5 inline-flex items-center justify-center w-4 h-4 rounded-full bg-brand-neon/20 text-brand-neon shrink-0">
                         <Check size={10} strokeWidth={3} />
@@ -53,11 +52,11 @@ export default function ToolsPage() {
                   ))}
                 </ul>
 
-                {t.screenshots.length > 0 && (
+                {(t.screenshots ?? []).length > 0 && (
                   <div className="mt-6">
                     <p className="text-xs uppercase tracking-widest text-white/55 mb-3">Screenshots</p>
                     <div className="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory">
-                      {t.screenshots.map((src, idx) => (
+                      {(t.screenshots ?? []).map((src, idx) => (
                         <div
                           key={idx}
                           className="snap-start shrink-0 w-64 aspect-video rounded-xl overflow-hidden glass-strong neon-border"

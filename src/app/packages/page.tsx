@@ -1,16 +1,13 @@
-import type { Metadata } from "next";
+"use client";
+
 import { Section, SectionHeader } from "@/components/Section";
 import { PackageCard } from "@/components/PackageCard";
-import { packages } from "@/data/packages";
-
-export const metadata: Metadata = {
-  title: "Packages",
-  description: "Transparent packages for websites, e-commerce, marketing, and AI services.",
-};
+import { usePackages } from "@/hooks/useContent";
 
 const categories = ["Website", "E-commerce", "Marketing", "AI"] as const;
 
 export default function PackagesPage() {
+  const packages = usePackages();
   return (
     <Section className="pt-32">
       <SectionHeader

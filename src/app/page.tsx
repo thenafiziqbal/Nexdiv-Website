@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Hero } from "@/components/Hero";
@@ -6,11 +8,13 @@ import { Section, SectionHeader } from "@/components/Section";
 import { ServiceCard } from "@/components/ServiceCard";
 import { ToolCard } from "@/components/ToolCard";
 import { PackageCard } from "@/components/PackageCard";
-import { services } from "@/data/services";
-import { tools } from "@/data/tools";
-import { packages } from "@/data/packages";
+import { useServices, useTools, usePackages } from "@/hooks/useContent";
 
 export default function Home() {
+  const services = useServices();
+  const tools = useTools();
+  const packages = usePackages();
+
   return (
     <>
       <Hero />

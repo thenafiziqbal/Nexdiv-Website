@@ -54,21 +54,20 @@ export function PaymentForm({
     setStatus("loading");
     setError(null);
     const fd = new FormData(e.currentTarget);
+    const newId = `NXD-${Date.now()}-${Math.random().toString(36).slice(2, 7).toUpperCase()}`;
     const data = {
       ...Object.fromEntries(fd.entries()),
       type,
       selected,
       amount,
+      orderId: newId,
+      status: "pending_verification" as const,
+      createdAt: Date.now(),
     };
     try {
-      const res = await fetch("/api/payments", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      if (!res.ok) throw new Error("Failed to submit");
-      const json = await res.json();
-      setOrderId(json.orderId);
+      const { createItem } = await import("@/lib/firebase-data");
+      await createItem("orders", data);
+      setOrderId(newId);
       setStatus("success");
     } catch (err) {
       setStatus("error");

@@ -1,14 +1,11 @@
-import type { Metadata } from "next";
+"use client";
+
 import { Section, SectionHeader } from "@/components/Section";
 import { TeamCard } from "@/components/TeamCard";
-import { team } from "@/data/team";
-
-export const metadata: Metadata = {
-  title: "Team",
-  description: "Meet the people building Nexdiv.",
-};
+import { useTeam } from "@/hooks/useContent";
 
 export default function TeamPage() {
+  const team = useTeam();
   return (
     <Section className="pt-32">
       <SectionHeader

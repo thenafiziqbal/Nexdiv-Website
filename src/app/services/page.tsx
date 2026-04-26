@@ -1,17 +1,13 @@
-import type { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
 import { Check, ArrowRight } from "lucide-react";
 import { Section, SectionHeader } from "@/components/Section";
-import { services } from "@/data/services";
+import { useServices } from "@/hooks/useContent";
 import { formatBDT } from "@/lib/utils";
 
-export const metadata: Metadata = {
-  title: "Services",
-  description:
-    "Our services: website development, e-commerce, AI agents, SaaS, browser extensions, and more.",
-};
-
 export default function ServicesPage() {
+  const services = useServices();
   return (
     <Section className="pt-32">
       <SectionHeader
@@ -28,8 +24,10 @@ export default function ServicesPage() {
             className="relative grid grid-cols-1 lg:grid-cols-2 gap-0 rounded-3xl overflow-hidden glass-strong neon-border"
           >
             <div className="relative aspect-[16/10] lg:aspect-auto min-h-[260px] order-1 lg:order-none">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={s.image} alt={s.title} className="absolute inset-0 w-full h-full object-cover" />
+              {s.image && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={s.image} alt={s.title} className="absolute inset-0 w-full h-full object-cover" />
+              )}
               <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-brand-night via-brand-night/60 to-transparent" />
             </div>
             <div className="p-7 sm:p-10 flex flex-col justify-center">
@@ -42,7 +40,7 @@ export default function ServicesPage() {
               <p className="mt-3 text-white/75 leading-relaxed">{s.description}</p>
 
               <ul className="mt-5 grid sm:grid-cols-2 gap-2">
-                {s.features.map((f) => (
+                {(s.features ?? []).map((f) => (
                   <li key={f} className="text-sm text-white/80 flex items-start gap-2">
                     <span className="mt-0.5 inline-flex items-center justify-center w-4 h-4 rounded-full bg-brand-neon/20 text-brand-neon shrink-0">
                       <Check size={10} strokeWidth={3} />
