@@ -811,7 +811,7 @@
           <aside style="display:flex;flex-direction:column;gap:14px">
             <div class="card glass-strong neon-border"><div class="ic">${ic("mail",18)}</div><h3 style="margin:0 0 4px;font-size:16px">Email</h3><a class="muted" href="mailto:${esc(c.email)}">${esc(c.email)}</a></div>
             <div class="card glass-strong neon-border"><div class="ic">${ic("phone",18)}</div><h3 style="margin:0 0 4px;font-size:16px">Phone</h3><a class="muted" href="tel:${esc(c.phone)}">${esc(c.phone)}</a></div>
-            <div class="card glass-strong neon-border"><div class="ic">${ic("msg",18)}</div><h3 style="margin:0 0 4px;font-size:16px">WhatsApp</h3><a class="muted" target="_blank" rel="noopener" href="https://wa.me/${esc((c.whatsapp||"").replace(/\\D/g,""))}">${esc(c.whatsapp)}</a></div>
+            <div class="card glass-strong neon-border"><div class="ic">${ic("msg",18)}</div><h3 style="margin:0 0 4px;font-size:16px">WhatsApp</h3><a class="muted" target="_blank" rel="noopener" href="https://wa.me/${esc((c.whatsapp||"").replace(/\D/g,""))}">${esc(c.whatsapp)}</a></div>
             <div class="card glass-strong neon-border"><div class="ic">${ic("pin",18)}</div><h3 style="margin:0 0 4px;font-size:16px">Office</h3><span class="muted">${esc(c.address)}</span></div>
           </aside>
           <div class="card glass-strong neon-border" style="padding:26px">
@@ -1404,7 +1404,7 @@
   }
   function listFieldHTML(label, name, value){
     const arr = Array.isArray(value)?value:[];
-    return `<label class="field"><span class="lbl">${esc(label)} <span class="muted" style="font-size:11px">(one per line)</span></span><textarea class="textarea" name="${name}">${esc(arr.join("\\n"))}</textarea></label>`;
+    return `<label class="field"><span class="lbl">${esc(label)} <span class="muted" style="font-size:11px">(one per line)</span></span><textarea class="textarea" name="${name}">${esc(arr.join("\n"))}</textarea></label>`;
   }
 
   function openEditModal(collection, existing){
