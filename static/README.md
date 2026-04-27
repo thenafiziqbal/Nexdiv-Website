@@ -1,25 +1,44 @@
-# Nexdiv — single-file static site
+# Nexdiv — static HTML version (cPanel-ready)
 
-Everything is in `index.html`: HTML + CSS + JS + Firebase (loaded from CDN).
-No build step. No framework. Drop `index.html` on any host and it works.
+Three files, no build step, no framework. Works on any shared host.
+
+| File | Purpose |
+|---|---|
+| `index.html` | Combined: public site **and** admin panel in one file. (Optional, kept for backwards compatibility.) |
+| `user.html` | **Public site only** — home / services / tools / packages / about / team / contact / payment. No admin code. |
+| `admin.html` | **Admin panel only** — Firebase Auth + dashboard + CRUD for everything. No public pages. |
+
+Both `user.html` and `admin.html` talk to the **same Firebase database**, so anything you change in the admin panel goes live on the user site instantly.
 
 ## How to deploy on cPanel / shared hosting
 
-1. Download `index.html`.
-2. Open cPanel → **File Manager** → `public_html/` (your domain root).
-3. Upload `index.html`.
-4. Visit `https://yourdomain.com/` — done.
+You can use either one file or split files.
 
-If you want it under a subfolder (e.g. `https://yourdomain.com/site/`), upload it inside that folder. The app uses hash-based routing (`#/services`, `#/admin`, etc.) so subfolders work without server config.
+### Option A — split files (recommended)
+
+1. Open cPanel → **File Manager** → `public_html/`.
+2. Upload **`user.html`** as the public landing page (rename it to `index.html` if you want it served at the domain root).
+3. Upload **`admin.html`** alongside it (so it lives at `https://yourdomain.com/admin.html`).
+4. Visit `https://yourdomain.com/` for the public site, `https://yourdomain.com/admin.html` for the admin panel.
+
+You can also put `admin.html` in a private subfolder (e.g. `public_html/secret-admin/admin.html`) so the URL is harder to guess. Firebase Auth still protects it — login is required.
+
+### Option B — single combined file
+
+Just upload `index.html`. Public site lives at `/`, admin lives at `/#/admin/login`.
 
 ## Routes
 
-- Public: `#/`, `#/services`, `#/tools`, `#/packages`, `#/about`, `#/team`, `#/contact`, `#/payment`
-- Admin: `#/admin/login`, `#/admin`, `#/admin/services`, `#/admin/packages`, `#/admin/tools`, `#/admin/team`, `#/admin/orders`, `#/admin/messages`, `#/admin/settings`
+**user.html** (or `index.html` public side):
+`#/`, `#/services`, `#/tools`, `#/packages`, `#/about`, `#/team`, `#/contact`, `#/payment`
+
+**admin.html** (or `index.html` admin side):
+`#/admin`, `#/admin/services`, `#/admin/packages`, `#/admin/tools`, `#/admin/team`, `#/admin/orders`, `#/admin/messages`, `#/admin/settings`
+(In the dedicated `admin.html` you can also drop the `/admin` prefix — `#/services`, `#/packages`, etc. all work.)
 
 ## Firebase setup (one-time, ~5 min)
 
-The Firebase config is hard-coded inside `index.html` (project: `thegrils-79663`). If you swap to a new Firebase project, edit the `FIREBASE_CONFIG` block near the top of the `<script>` section.
+The Firebase config is hard-coded inside each HTML file (project: `thegrils-79663`). If you swap to a new Firebase project, edit the `FIREBASE_CONFIG` block near the top of the `<script>` section in **all three files**.
 
 1. **Authentication → Sign-in method**: enable **Email/Password**.
 2. **Authentication → Users**: add your admin email + password.
@@ -40,13 +59,13 @@ The Firebase config is hard-coded inside `index.html` (project: `thegrils-79663`
 
 ## First admin login
 
-1. Go to `#/admin/login` and sign in.
+1. Open `admin.html` (or `#/admin/login` in the combined file) and sign in.
 2. On the dashboard, click **"Seed defaults"** once to populate the database with the bundled defaults (services / packages / tools / team / settings).
 3. Edit anything from the relevant admin pages — changes go live on the public site instantly.
 
 ## Customisation
 
-- **Colors / theme**: change in `#/admin/settings` (or edit `:root` CSS variables in the `<style>` block).
-- **Hero video**: change URL in `#/admin/settings` → Hero.
-- **Notice bar**: enable/disable + edit message in `#/admin/settings` → Notice.
-- **Contact / payment numbers / socials**: all editable in `#/admin/settings`.
+- **Colors / theme**: change in admin → Settings (or edit `:root` CSS variables in the `<style>` block).
+- **Hero video**: admin → Settings → Hero.
+- **Notice bar**: admin → Settings → Notice.
+- **Contact / payment numbers / socials**: admin → Settings.

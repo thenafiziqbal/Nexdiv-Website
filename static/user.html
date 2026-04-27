@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nexdiv — Future-built digital agency</title>
+<meta name="description" content="Nexdiv is a digital agency building futuristic websites, AI agents, SaaS products, and growth-focused marketing." />
+<meta name="theme-color" content="#020617" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#0a84ff;
+    --neon:#39ff14;
+    --mint:#00ffa3;
+    --night:#020617;
+    --night-2:#0b1023;
+    --white:#ffffff;
+    --primary:var(--blue);
+    --accent:var(--neon);
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--night);color:#fff;font-family:'Plus Jakarta Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+  body{min-height:100vh;overflow-x:hidden;position:relative}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+  input,select,textarea{font-family:inherit}
+  ::-webkit-scrollbar{width:8px;height:8px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:rgba(10,132,255,0.4);border-radius:8px}
+
+  /* ─── BACKGROUND VIDEO + FX ─── */
+  .bg-wrap{position:fixed;inset:0;z-index:-1;overflow:hidden;background:var(--night)}
+  .bg-wrap video,.bg-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.35}
+  .bg-wrap::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at top,rgba(10,132,255,0.25),transparent 60%),radial-gradient(ellipse at bottom right,rgba(57,255,20,0.12),transparent 60%),linear-gradient(180deg,rgba(2,6,23,0.45),rgba(2,6,23,0.85))}
+  .grid-overlay{position:fixed;inset:0;z-index:-1;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse at center,black 30%,transparent 75%)}
+  .orb{position:fixed;border-radius:50%;filter:blur(80px);opacity:.55;z-index:-1;pointer-events:none;animation:floaty 14s ease-in-out infinite}
+  .orb.b{background:var(--blue);width:380px;height:380px;top:-80px;left:-80px}
+  .orb.g{background:var(--neon);width:300px;height:300px;bottom:-60px;right:-40px;animation-delay:-6s;opacity:.35}
+  @keyframes floaty{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(40px,-30px,0)}}
+
+  /* ─── LAYOUT ─── */
+  .container{max-width:1200px;margin:0 auto;padding:0 20px}
+  .glass{background:rgba(255,255,255,0.04);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.07)}
+  .glass-strong{background:rgba(255,255,255,0.06);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,0.10)}
+  .neon-border{box-shadow:0 0 0 1px rgba(57,255,20,0.18) inset, 0 0 30px rgba(10,132,255,0.10)}
+  .neon-text{background:linear-gradient(135deg,#fff,var(--mint) 60%,var(--neon));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .gradient-btn{background:linear-gradient(90deg,var(--blue),var(--mint));color:var(--night);font-weight:700;border-radius:14px;padding:12px 22px;display:inline-flex;align-items:center;gap:8px;transition:transform .15s ease, box-shadow .2s}
+  .gradient-btn:hover{transform:translateY(-1px);box-shadow:0 8px 30px rgba(57,255,20,0.35)}
+  .ghost-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:11px 20px;display:inline-flex;align-items:center;gap:8px;color:#fff;font-weight:600;font-size:14px;transition:background .2s}
+  .ghost-btn:hover{background:rgba(10,132,255,0.18)}
+  .badge{display:inline-block;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.18em;padding:4px 10px;border-radius:999px;background:rgba(57,255,20,0.12);color:var(--neon);border:1px solid rgba(57,255,20,0.35)}
+  .label-up{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.62)}
+
+  /* ─── NOTICE BAR ─── */
+  .notice{position:fixed;top:0;left:0;right:0;background:linear-gradient(90deg,var(--blue),var(--mint));color:var(--night);font-weight:700;font-size:13px;padding:8px 16px;z-index:60;text-align:center;display:flex;align-items:center;justify-content:center;gap:8px}
+  .notice .marquee{display:inline-block;white-space:nowrap;animation:marquee 28s linear infinite}
+  @keyframes marquee{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+  .notice.hide{display:none}
+
+  /* ─── NAVBAR ─── */
+  nav.navbar{position:fixed;top:34px;left:0;right:0;z-index:50;transition:top .3s}
+  nav.navbar.no-notice{top:0}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;background:rgba(2,6,23,0.55);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.06)}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.06em;font-size:18px}
+  .logo .logo-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--blue),var(--mint));display:flex;align-items:center;justify-content:center;color:var(--night);font-weight:900;font-size:18px;box-shadow:0 6px 24px rgba(10,132,255,.45)}
+  .nav-links{display:flex;gap:8px;align-items:center}
+  .nav-links a{padding:8px 14px;border-radius:10px;font-size:14px;font-weight:600;color:rgba(255,255,255,.78);transition:all .2s}
+  .nav-links a:hover,.nav-links a.active{background:rgba(10,132,255,.18);color:#fff}
+  .nav-cta{display:flex;gap:8px;align-items:center}
+  .nav-toggle{display:none;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:10px;width:40px;height:40px;justify-content:center;align-items:center}
+  .nav-toggle svg{width:20px;height:20px}
+  @media(max-width:900px){
+    .nav-links{position:fixed;top:90px;left:16px;right:16px;background:rgba(2,6,23,0.97);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:14px;flex-direction:column;align-items:stretch;display:none}
+    .nav-links.open{display:flex}
+    .nav-toggle{display:flex}
+    .nav-cta .ghost-btn{display:none}
+  }
+
+  /* ─── SECTIONS ─── */
+  section.sec{padding:64px 0;position:relative}
+  .sec-head{text-align:center;max-width:760px;margin:0 auto 40px}
+  .sec-head h2{font-size:clamp(28px,4.5vw,48px);font-weight:900;letter-spacing:-.02em;margin:12px 0 10px}
+  .sec-head p{color:rgba(255,255,255,.7);font-size:15px;line-height:1.6}
+
+  /* ─── HERO ─── */
+  .hero{padding:140px 0 80px;text-align:center;position:relative}
+  .hero h1{font-size:clamp(40px,7vw,84px);font-weight:900;letter-spacing:-.03em;line-height:1.02;margin:18px 0}
+  .hero p.lede{max-width:700px;margin:0 auto;color:rgba(255,255,255,.72);font-size:clamp(15px,1.6vw,18px);line-height:1.6}
+  .hero .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:880px;margin:54px auto 0}
+  @media(max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat-tile{padding:18px;border-radius:18px;text-align:center}
+  .stat-tile .n{font-size:30px;font-weight:900;color:var(--neon)}
+  .stat-tile .l{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:rgba(255,255,255,.6);margin-top:4px}
+
+  /* ─── FEATURE SLIDER ─── */
+  .slider{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px 0;scrollbar-width:none}
+  .slider::-webkit-scrollbar{display:none}
+  .slide-card{flex:0 0 auto;width:280px;padding:22px;border-radius:22px;scroll-snap-align:start}
+  .slide-card .ic{width:42px;height:42px;border-radius:12px;background:rgba(57,255,20,.15);color:var(--neon);display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+  .slide-card h4{font-size:16px;font-weight:800;margin:0 0 6px}
+  .slide-card p{font-size:13px;color:rgba(255,255,255,.65);margin:0;line-height:1.5}
+
+  /* ─── CARDS ─── */
+  .grid{display:grid;gap:18px}
+  .grid-3{grid-template-columns:repeat(3,1fr)}
+  .grid-2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:980px){.grid-3{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:640px){.grid-3,.grid-2{grid-template-columns:1fr}}
+  .card{padding:22px;border-radius:22px;transition:transform .2s, box-shadow .2s}
+  .card:hover{transform:translateY(-4px);box-shadow:0 0 0 1px rgba(57,255,20,0.4) inset, 0 22px 60px rgba(10,132,255,.18)}
+  .card .ic{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,rgba(10,132,255,.25),rgba(57,255,20,.20));display:flex;align-items:center;justify-content:center;color:var(--neon);margin-bottom:14px}
+  .card h3{font-size:18px;font-weight:800;margin:0 0 6px}
+  .card .short{font-size:13px;color:rgba(255,255,255,.7);margin:0 0 12px;line-height:1.55}
+  .card .price{font-size:18px;font-weight:900;color:var(--neon);margin-top:10px}
+  .card .img{aspect-ratio:16/9;background:rgba(255,255,255,.04);border-radius:14px;overflow:hidden;margin-bottom:14px;position:relative}
+  .card .img img{width:100%;height:100%;object-fit:cover}
+  .card .meta{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:14px}
+
+  /* package ribbon */
+  .pkg-card{position:relative}
+  .pkg-card.popular::before{content:"POPULAR";position:absolute;top:14px;right:14px;padding:5px 10px;font-size:10px;font-weight:900;letter-spacing:.16em;background:linear-gradient(90deg,var(--blue),var(--mint));color:var(--night);border-radius:8px}
+  .feature-list{margin:14px 0 0;padding:0;list-style:none}
+  .feature-list li{font-size:13px;color:rgba(255,255,255,.78);padding:6px 0 6px 24px;position:relative}
+  .feature-list li::before{content:"";width:16px;height:16px;position:absolute;left:0;top:7px;border-radius:50%;background:rgba(57,255,20,.18);border:1px solid rgba(57,255,20,.45)}
+  .feature-list li::after{content:"";width:6px;height:3px;position:absolute;left:5px;top:13px;border-left:2px solid var(--neon);border-bottom:2px solid var(--neon);transform:rotate(-45deg)}
+
+  /* tool detail */
+  .tool-row{padding:0;overflow:hidden;border-radius:24px;margin-bottom:22px}
+  .tool-row .tr-grid{display:grid;grid-template-columns:2fr 3fr;gap:0}
+  @media(max-width:900px){.tool-row .tr-grid{grid-template-columns:1fr}}
+  .tool-row .tr-img{aspect-ratio:16/10;position:relative;background:rgba(255,255,255,.04)}
+  .tool-row .tr-img img{width:100%;height:100%;object-fit:cover}
+  .tool-row .tr-img .cat{position:absolute;top:14px;left:14px}
+  .tool-row .tr-content{padding:28px}
+  .screens{display:flex;gap:10px;overflow-x:auto;margin:14px 0 0;scrollbar-width:none}
+  .screens::-webkit-scrollbar{display:none}
+  .screens img{width:240px;aspect-ratio:16/10;border-radius:12px;object-fit:cover;flex-shrink:0;border:1px solid rgba(255,255,255,.08)}
+
+  /* team */
+  .team-card{text-align:center;padding:24px}
+  .team-card .av{width:96px;height:96px;border-radius:50%;margin:0 auto 14px;overflow:hidden;border:2px solid rgba(57,255,20,.4);box-shadow:0 8px 30px rgba(10,132,255,.25)}
+  .team-card .av img{width:100%;height:100%;object-fit:cover}
+  .team-card h3{font-size:16px;margin:6px 0 2px;font-weight:800}
+  .team-card .role{font-size:12px;color:var(--neon);font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+  .team-card .bio{font-size:13px;color:rgba(255,255,255,.7);margin:10px 0 0;line-height:1.5}
+  .team-card .socs{display:flex;gap:6px;justify-content:center;margin-top:14px}
+  .team-card .socs a{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;color:#fff;transition:background .2s}
+  .team-card .socs a:hover{background:rgba(10,132,255,.25)}
+
+  /* forms */
+  .form-row{display:grid;gap:14px}
+  .form-row.cols-2{grid-template-columns:1fr 1fr}
+  @media(max-width:640px){.form-row.cols-2{grid-template-columns:1fr}}
+  .input,.select,.textarea{width:100%;padding:12px 14px;border-radius:12px;background:rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:14px;outline:none;transition:border-color .15s, box-shadow .15s}
+  .input:focus,.select:focus,.textarea:focus{border-color:var(--neon);box-shadow:0 0 0 4px rgba(57,255,20,.12)}
+  .textarea{min-height:110px;resize:vertical}
+  label.field{display:block}
+  label.field .lbl{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.65);display:block;margin-bottom:6px}
+  label.field .lbl .req{color:var(--neon);margin-left:3px}
+
+  /* segmented */
+  .seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:rgba(2,6,23,0.4);padding:5px;border-radius:14px;border:1px solid rgba(255,255,255,.08)}
+  .seg button{padding:9px;border-radius:10px;font-size:13px;font-weight:700;color:rgba(255,255,255,.7);background:transparent;transition:all .2s}
+  .seg button.active{background:linear-gradient(90deg,var(--blue),var(--mint));color:var(--night)}
+
+  /* footer */
+  footer.foot{margin-top:80px;padding:60px 0 40px;border-top:1px solid rgba(255,255,255,.07);background:rgba(2,6,23,0.5)}
+  .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px}
+  @media(max-width:900px){.foot-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.foot-grid{grid-template-columns:1fr}}
+  .foot h5{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--neon);margin:0 0 14px}
+  .foot a{display:block;color:rgba(255,255,255,.7);font-size:13px;margin-bottom:8px}
+  .foot a:hover{color:#fff}
+  .foot .copy{margin-top:34px;padding-top:22px;border-top:1px solid rgba(255,255,255,.06);color:rgba(255,255,255,.5);font-size:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+  .socs-foot{display:flex;gap:8px;margin-top:10px}
+  .socs-foot a{width:34px;height:34px;background:rgba(255,255,255,.06);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;margin:0;transition:background .2s}
+  .socs-foot a:hover{background:rgba(10,132,255,.3)}
+
+  /* status / banner */
+  .alert{padding:12px 14px;border-radius:12px;font-size:13px;margin-bottom:12px}
+  .alert.success{background:rgba(57,255,20,.12);color:var(--neon);border:1px solid rgba(57,255,20,.35)}
+  .alert.error{background:rgba(255,80,80,.12);color:#ff8a8a;border:1px solid rgba(255,80,80,.35)}
+  .alert.info{background:rgba(10,132,255,.12);color:#7fc1ff;border:1px solid rgba(10,132,255,.35)}
+
+  /* admin layout */
+  .admin-shell{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+  @media(max-width:900px){.admin-shell{grid-template-columns:1fr}}
+  .admin-side{background:rgba(2,6,23,0.85);border-right:1px solid rgba(255,255,255,.06);padding:22px 16px;position:sticky;top:0;height:100vh}
+  @media(max-width:900px){.admin-side{position:static;height:auto}}
+  .admin-side .sb-nav{display:flex;flex-direction:column;gap:4px;margin-top:14px}
+  .admin-side .sb-nav a{font-size:13px;font-weight:600;color:rgba(255,255,255,.7);padding:9px 12px;border-radius:10px}
+  .admin-side .sb-nav a.active,.admin-side .sb-nav a:hover{background:rgba(10,132,255,.18);color:#fff}
+  .admin-main{padding:30px;max-width:1200px}
+  @media(max-width:640px){.admin-main{padding:18px}}
+  .admin-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:10px}
+  .admin-head h1{font-size:22px;font-weight:800;margin:0}
+  .admin-tile{padding:18px;border-radius:18px;text-decoration:none;color:#fff;display:block}
+  .admin-tile .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.6);margin-bottom:6px}
+  .admin-tile .v{font-size:30px;font-weight:900;color:var(--neon)}
+  .admin-tile:hover{background:rgba(10,132,255,.1)}
+
+  /* table-ish list */
+  .list{display:flex;flex-direction:column;gap:8px}
+  .list-row{padding:14px 16px;border-radius:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .list-row .actions{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+  .icon-btn{width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.06);display:inline-flex;align-items:center;justify-content:center;transition:background .2s}
+  .icon-btn:hover{background:rgba(10,132,255,.2)}
+  .icon-btn.danger:hover{background:rgba(255,80,80,.25)}
+
+  /* modal */
+  .modal-bg{position:fixed;inset:0;background:rgba(2,6,23,.78);backdrop-filter:blur(8px);z-index:200;display:flex;align-items:center;justify-content:center;padding:18px}
+  .modal-bg.hidden{display:none}
+  .modal{width:100%;max-width:680px;max-height:90vh;overflow-y:auto;border-radius:22px;padding:26px;background:rgba(11,16,35,0.92);border:1px solid rgba(255,255,255,.08)}
+  .modal h2{font-size:20px;font-weight:800;margin:0 0 16px}
+  .modal .actions{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}
+
+  /* anim */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease, transform .7s ease}
+  .reveal.show{opacity:1;transform:none}
+
+  /* utilities */
+  .center{text-align:center}
+  .row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .grow{flex:1}
+  .muted{color:rgba(255,255,255,.65)}
+  .pill{display:inline-block;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:700;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1)}
+  .pill.green{background:rgba(57,255,20,.14);color:var(--neon);border-color:rgba(57,255,20,.4)}
+  .pill.red{background:rgba(255,80,80,.14);color:#ff8a8a;border-color:rgba(255,80,80,.4)}
+  .pill.blue{background:rgba(10,132,255,.14);color:#7fc1ff;border-color:rgba(10,132,255,.4)}
+  .pill.gray{background:rgba(255,255,255,.07);color:rgba(255,255,255,.7)}
+  .hr{height:1px;background:rgba(255,255,255,.07);margin:18px 0;border:0}
+
+  /* method tile (payment) */
+  .method{padding:18px;border-radius:18px;background:linear-gradient(135deg,rgba(10,132,255,.18),rgba(57,255,20,.07));border:1px solid rgba(255,255,255,.08)}
+  .method .ml{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.65)}
+  .method .mn{font-size:20px;font-weight:900;color:var(--neon);margin:4px 0 6px}
+  .method p{margin:0;font-size:12px;color:rgba(255,255,255,.7);line-height:1.5}
+
+  /* loading */
+  .spinner{width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.2);border-top-color:var(--neon);animation:spin .8s linear infinite;display:inline-block;vertical-align:middle}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* feature slider arrow */
+  .pageshell{padding-top:90px}
+</style>
+</head>
+<body>
+  <div class="bg-wrap" id="bg-wrap">
+    <video id="bg-video" autoplay muted loop playsinline></video>
+  </div>
+  <div class="grid-overlay"></div>
+  <div class="orb b"></div>
+  <div class="orb g"></div>
+
+  <div id="notice" class="notice hide" role="status" aria-live="polite">
+    <span class="marquee" id="notice-text"></span>
+  </div>
+
+  <div id="public-shell">
+    <nav class="navbar" id="nav">
+      <div class="container nav-inner">
+        <a href="#/" class="logo" id="brand">
+          <span class="logo-mark">N</span>
+          <span id="brand-name">Nexdiv</span>
+        </a>
+        <div class="nav-links" id="nav-links">
+          <a href="#/" data-route="/">Home</a>
+          <a href="#/services" data-route="/services">Services</a>
+          <a href="#/tools" data-route="/tools">Tools</a>
+          <a href="#/packages" data-route="/packages">Packages</a>
+          <a href="#/about" data-route="/about">About</a>
+          <a href="#/team" data-route="/team">Team</a>
+          <a href="#/contact" data-route="/contact">Contact</a>
+        </div>
+        <div class="nav-cta">
+          <a class="ghost-btn" href="#/payment">Pay</a>
+          <a class="gradient-btn" href="#/contact">Start a project</a>
+          <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <main id="app" class="pageshell"></main>
+
+  <footer class="foot" id="footer"></footer>
+
+  <!-- Firebase compat (works without bundlers) -->
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-database-compat.js"></script>
+
+  <script>
+  /* =============================================================
+     Nexdiv single-file app
+     - Vanilla JS hash router, Firebase RTDB + Auth
+     - Public site + admin panel in one file
+     ============================================================= */
+
+  /* ---------- CONFIG ---------- */
+  const FIREBASE_CONFIG = {
+    apiKey: "AIzaSyDwYZkAYBOYRgMKhCqYhKBIBjhJTT4bFmY",
+    authDomain: "thegrils-79663.firebaseapp.com",
+    databaseURL: "https://thegrils-79663-default-rtdb.firebaseio.com",
+    projectId: "thegrils-79663",
+    storageBucket: "thegrils-79663.firebasestorage.app",
+    messagingSenderId: "487123252212",
+    appId: "1:487123252212:web:baf8bc459027c341cb3fa1",
+    measurementId: "G-7QF2GYHEB6"
+  };
+  firebase.initializeApp(FIREBASE_CONFIG);
+  const db = firebase.database();
+
+  /* ---------- DEFAULT DATA ---------- */
+  const DEFAULT_SETTINGS = {
+    siteName: "Nexdiv",
+    tagline: "Future-built digital agency",
+    description: "We build futuristic websites, AI agents, SaaS products, and growth-focused marketing for ambitious brands.",
+    logo: "",
+    colors: { primary: "#0a84ff", accent: "#39ff14", neon: "#39ff14" },
+    notice: { enabled: true, message: "🎉 Launch offer — 20% off all packages this month. Book a free strategy call →" },
+    hero: {
+      video: "https://cdn.coverr.co/videos/coverr-typing-on-keyboard-2741/1080p.mp4",
+      poster: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1600&q=80"
+    },
+    contact: {
+      email: "hello@nexdiv.com",
+      phone: "+8801XXXXXXXXX",
+      whatsapp: "+8801XXXXXXXXX",
+      address: "Dhaka, Bangladesh"
+    },
+    socials: {
+      facebook: "https://facebook.com/", twitter: "https://twitter.com/",
+      instagram: "https://instagram.com/", linkedin: "https://linkedin.com/",
+      youtube: "https://youtube.com/", github: "https://github.com/"
+    },
+    payment: {
+      bkash: "01XXXXXXXXX", nagad: "01XXXXXXXXX", rocket: "01XXXXXXXXX",
+      bankName: "City Bank", bankAccount: "1234 5678 9012", bankBranch: "Dhanmondi"
+    }
+  };
+
+  const DEFAULT_SERVICES = [
+    {slug:"website-development",title:"Website Development",short:"Modern, blazing-fast, SEO-ready websites.",description:"From landing pages to complex web platforms — Next.js, React, headless CMS, fully responsive, optimized for speed and SEO.",icon:"code",features:["Next.js / React stack","Fully responsive & mobile-first","SEO + Core Web Vitals optimized","CMS (Sanity / Strapi / WordPress)","Lifetime support"],startingPrice:15000,image:"https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&w=1600&q=80"},
+    {slug:"ecommerce-development",title:"E-commerce Development",short:"High-converting online stores with payment gateway.",description:"Custom Shopify, WooCommerce or fully custom-built e-commerce platforms with bKash/Nagad/SSLCommerz integration, inventory, dashboard.",icon:"shopping-bag",features:["Shopify / WooCommerce / custom","bKash / Nagad / SSLCommerz","Inventory + order management","Multi-vendor support","Marketing automation built-in"],startingPrice:35000,image:"https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1600&q=80"},
+    {slug:"social-media-marketing",title:"Social Media Marketing",short:"Grow your brand on Facebook, Instagram, TikTok.",description:"Strategy + content + paid ads. We manage your social presence end-to-end and deliver measurable ROI.",icon:"trending-up",features:["Content calendar + design","Paid ads (Meta, TikTok, Google)","Analytics + monthly reports","Influencer outreach","Community management"],startingPrice:12000,image:"https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1600&q=80"},
+    {slug:"digital-marketing",title:"Digital Marketing & SEO",short:"Rank higher, get more traffic, more leads.",description:"Full-funnel digital marketing — SEO, content marketing, email automation, and conversion optimization.",icon:"search",features:["On-page + off-page SEO","Google Ads management","Email marketing + automation","CRO + landing pages","Monthly KPI dashboard"],startingPrice:18000,image:"https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1600&q=80"},
+    {slug:"ai-agent-development",title:"Custom AI Agent Development",short:"Tailored AI agents that automate your business.",description:"We design, build and deploy custom AI agents — sales bots, support bots, internal copilots — using OpenAI, Anthropic, and open-source LLMs.",icon:"bot",features:["OpenAI / Anthropic / Llama","Custom knowledge base (RAG)","Voice + text + multilingual","Bangla & English support","Deploy on web, WhatsApp, Messenger"],startingPrice:50000,image:"https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1600&q=80"},
+    {slug:"ai-chatbot",title:"AI Chatbot Integration",short:"Intelligent chatbots for your website & messengers.",description:"Drop-in AI chatbots trained on your business — answer FAQs, qualify leads, book appointments, take orders.",icon:"message-circle",features:["24/7 instant replies","Lead capture + CRM sync","Bangla + English","Messenger / WhatsApp / Web","Admin dashboard"],startingPrice:25000,image:"https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&fit=crop&w=1600&q=80"},
+    {slug:"browser-extension",title:"Browser Extension Development",short:"Custom Chrome / Edge / Firefox extensions.",description:"We build powerful productivity, scraping, automation, and AI-powered browser extensions.",icon:"puzzle",features:["Chrome / Edge / Firefox","Content scripts + background workers","AI integration","Chrome Web Store publishing","Update + maintenance"],startingPrice:30000,image:"https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1600&q=80"},
+    {slug:"saas-development",title:"SaaS Product Development",short:"End-to-end SaaS — from idea to launch.",description:"Multi-tenant SaaS platforms with subscription billing, admin panel, analytics, and scalable infrastructure.",icon:"layers",features:["Multi-tenant architecture","Stripe / SSLCommerz billing","Admin + tenant dashboards","API + webhook system","DevOps + monitoring"],startingPrice:80000,image:"https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1600&q=80"}
+  ];
+
+  const DEFAULT_PACKAGES = [
+    {slug:"starter-website",name:"Starter Website",category:"Website",pages:5,price:15000,features:["Up to 5 pages","Mobile responsive","Basic SEO","Contact form","Free SSL","1 month support"],delivery:"7 days"},
+    {slug:"business-website",name:"Business Website",category:"Website",pages:10,price:35000,popular:true,features:["Up to 10 pages","Custom design","Blog / CMS","Advanced SEO","WhatsApp + chat integration","3 months support"],delivery:"14 days"},
+    {slug:"premium-website",name:"Premium Website",category:"Website",pages:"unlimited",price:75000,features:["Unlimited pages","Premium animations / 3D","Multilingual","AI chatbot included","Performance + SEO suite","12 months support"],delivery:"21 days"},
+    {slug:"ecommerce-starter",name:"E-commerce Starter",category:"E-commerce",pages:8,price:45000,features:["Up to 50 products","bKash + Nagad + COD","Order dashboard","Customer accounts","1 free template","3 months support"],delivery:"14 days"},
+    {slug:"ecommerce-pro",name:"E-commerce Pro",category:"E-commerce",pages:"unlimited",price:95000,popular:true,features:["Unlimited products","Multi-vendor support","Inventory + warehouse","Marketing automation","Mobile app (PWA)","12 months support"],delivery:"30 days"},
+    {slug:"smm-basic",name:"Social Media — Basic",category:"Marketing",pages:0,price:12000,features:["12 posts / month","Facebook + Instagram","Basic ad management (৳5k budget)","Monthly report"],delivery:"Monthly"},
+    {slug:"smm-growth",name:"Social Media — Growth",category:"Marketing",pages:0,price:28000,features:["30 posts / month","FB + IG + TikTok","Ad management (৳15k budget incl.)","Influencer outreach","Weekly report"],delivery:"Monthly"},
+    {slug:"ai-chatbot-package",name:"AI Chatbot Package",category:"AI",pages:0,price:25000,features:["Trained on your data","Bangla + English","Web + Messenger + WhatsApp","Admin dashboard","3 months free updates"],delivery:"10 days"},
+    {slug:"ai-agent-custom",name:"Custom AI Agent",category:"AI",pages:0,price:80000,popular:true,features:["Fully custom-built agent","Multi-step reasoning","Tool / API access","RAG over your knowledge base","Voice + text","12 months support"],delivery:"30 days"}
+  ];
+
+  const DEFAULT_TOOLS = [
+    {slug:"nexdiv-ai-writer",name:"Nexdiv AI Writer",category:"AI Tool",short:"Bangla + English AI content writer trained for local market.",description:"Generate high-converting blog posts, ad copy, product descriptions and social posts in Bangla and English. Fine-tuned on Bangladeshi market context.",features:["100+ templates","Bangla + English fluency","Brand voice memory","Plagiarism check built-in","1-click publish to WordPress"],demoUrl:"https://writer.nexdiv.com",pricing:"৳ 499 / month",cover:"https://images.unsplash.com/photo-1655720828018-edd2daec9349?auto=format&fit=crop&w=1600&q=80",screenshots:["https://images.unsplash.com/photo-1675557009285-c7e0fef5b2e1?auto=format&fit=crop&w=1600&q=80","https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1600&q=80","https://images.unsplash.com/photo-1633419461186-7d40a38105ec?auto=format&fit=crop&w=1600&q=80"]},
+    {slug:"nexdiv-support-agent",name:"Nexdiv Support Agent",category:"AI Agent",short:"AI customer support agent that lives on your website 24/7.",description:"Train it on your FAQs, products, and policies. It handles support, qualifies leads, and books meetings — in Bangla & English.",features:["Multilingual (Bangla + English)","Train on PDFs, URLs, docs","Live human handover","Messenger + WhatsApp + Web","CRM integration"],demoUrl:"https://support.nexdiv.com",pricing:"৳ 1,500 / month",cover:"https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&fit=crop&w=1600&q=80",screenshots:["https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1600&q=80","https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1600&q=80"]},
+    {slug:"nexdiv-seo-suite",name:"Nexdiv SEO Suite",category:"SaaS",short:"All-in-one SEO toolkit for Bangladeshi marketers.",description:"Keyword research, rank tracking, on-page audit, backlink analyzer — everything an SEO needs in one dashboard.",features:["Bangla keyword database","Rank tracking (Google.com.bd)","On-page audit","Competitor analysis","White-label reports"],demoUrl:"https://seo.nexdiv.com",pricing:"৳ 2,500 / month",cover:"https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1600&q=80",screenshots:["https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80","https://images.unsplash.com/photo-1543286386-713bdd548da4?auto=format&fit=crop&w=1600&q=80"]},
+    {slug:"nexdiv-scraper-extension",name:"Nexdiv Scraper",category:"Browser Extension",short:"1-click web scraper for any website.",description:"Point and click to extract structured data from any website. Export to CSV, Sheets, Notion. AI-powered field detection.",features:["Visual point-and-click","AI field detection","Schedule recurring scrapes","Export CSV / Sheets / Notion","Bypass simple anti-bot"],demoUrl:"https://chrome.google.com/webstore",pricing:"Free + Pro ৳ 999/mo",cover:"https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1600&q=80",screenshots:["https://images.unsplash.com/photo-1607706189992-eae578626c86?auto=format&fit=crop&w=1600&q=80"]},
+    {slug:"nexdiv-sales-agent",name:"Nexdiv Sales Agent",category:"AI Agent",short:"AI SDR that books meetings while you sleep.",description:"Outbound AI sales agent — finds leads, personalizes outreach, follows up, books meetings. CRM-native.",features:["LinkedIn + email outreach","Personalized at scale","Auto follow-ups","Calendar integration","Pipeline analytics"],demoUrl:"https://sales.nexdiv.com",pricing:"৳ 5,000 / month",cover:"https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1600&q=80",screenshots:["https://images.unsplash.com/photo-1552581234-26160f608093?auto=format&fit=crop&w=1600&q=80"]},
+    {slug:"nexdiv-invoice",name:"Nexdiv Invoice",category:"SaaS",short:"Invoicing & billing tool for freelancers and SMBs.",description:"Send beautiful invoices, accept bKash/Nagad/cards, track expenses, generate VAT reports.",features:["Bangla + English invoices","bKash + Nagad + cards","Recurring billing","VAT-ready","Mobile app"],demoUrl:"https://invoice.nexdiv.com",pricing:"Free + Pro ৳ 799/mo",cover:"https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1600&q=80",screenshots:["https://images.unsplash.com/photo-1554224154-22dec7ec8818?auto=format&fit=crop&w=1600&q=80"]}
+  ];
+
+  const DEFAULT_TEAM = [
+    {slug:"nafiz-iqbal",name:"Nafiz Iqbal",role:"Founder & CEO",bio:"Serial entrepreneur. Building Nexdiv to make world-class digital and AI services accessible to Bangladeshi businesses.",avatar:"https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&w=600&q=80",socials:{linkedin:"https://linkedin.com/",twitter:"https://twitter.com/"}},
+    {slug:"rahim-ahmed",name:"Rahim Ahmed",role:"CTO & Lead Engineer",bio:"Full-stack engineer with 8+ years of experience. Loves React, Next.js, distributed systems, and shipping fast.",avatar:"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80",socials:{github:"https://github.com/",linkedin:"https://linkedin.com/"}},
+    {slug:"nadia-hasan",name:"Nadia Hasan",role:"Head of Design",bio:"Award-winning UI/UX designer focused on futuristic, accessible product experiences.",avatar:"https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=600&q=80",socials:{linkedin:"https://linkedin.com/"}},
+    {slug:"tanvir-khan",name:"Tanvir Khan",role:"AI Lead",bio:"ML engineer specializing in LLMs, RAG, and agentic systems. Bangla NLP enthusiast.",avatar:"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80",socials:{github:"https://github.com/"}},
+    {slug:"sumaiya-rahman",name:"Sumaiya Rahman",role:"Marketing Director",bio:"Performance marketing expert. Has driven 7-figure ad campaigns for global brands.",avatar:"https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=600&q=80",socials:{linkedin:"https://linkedin.com/"}},
+    {slug:"shakib-hossain",name:"Shakib Hossain",role:"Project Manager",bio:"Delivery-focused PM ensuring every project ships on time, on budget, beyond expectations.",avatar:"https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=600&q=80",socials:{linkedin:"https://linkedin.com/"}}
+  ];
+
+  const FEATURE_SLIDES = [
+    {ic:"⚡",title:"Blazing-fast performance",text:"Sub-100ms TTFB, 99+ Lighthouse, fully optimized."},
+    {ic:"🤖",title:"AI agents & SaaS",text:"Production-grade LLM agents, voice, RAG."},
+    {ic:"🎨",title:"Futuristic 3D design",text:"Glass-morphism, neon, smooth animations."},
+    {ic:"🛒",title:"E-commerce ready",text:"bKash, Nagad, SSLCommerz, multi-vendor."},
+    {ic:"📱",title:"Mobile-first responsive",text:"Looks beautiful on every screen size."},
+    {ic:"🚀",title:"Marketing built-in",text:"SEO, ads, automation, retention out of the box."}
+  ];
+
+  /* ---------- STATE ---------- */
+  let state = {
+    settings: clone(DEFAULT_SETTINGS),
+    services: clone(DEFAULT_SERVICES),
+    packages: clone(DEFAULT_PACKAGES),
+    tools: clone(DEFAULT_TOOLS),
+    team: clone(DEFAULT_TEAM),
+    orders: [],
+    messages: [],
+    user: null,
+    route: { path: "/", params: {} }
+  };
+
+  /* ---------- UTILS ---------- */
+  function clone(o){return JSON.parse(JSON.stringify(o))}
+  function $(sel,el){return (el||document).querySelector(sel)}
+  function $$(sel,el){return Array.from((el||document).querySelectorAll(sel))}
+  function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+  function fmtBDT(n){if(typeof n!=="number")return n; try{return new Intl.NumberFormat("en-BD",{style:"currency",currency:"BDT",maximumFractionDigits:0}).format(n)}catch(_){return "৳"+n.toLocaleString()}}
+  function fmtDate(ts){if(!ts) return "—"; try{return new Date(ts).toLocaleString()}catch(_){return ""}}
+  function objToArr(obj){if(!obj) return []; return Object.keys(obj).map(id=>Object.assign({id},obj[id]))}
+
+  /* ---------- ROUTER ---------- */
+  function parseHash(){
+    let h = location.hash.replace(/^#\/?/,"");
+    if (!h) h = "/";
+    if (!h.startsWith("/")) h = "/"+h;
+    const [path, qs] = h.split("?");
+    const params = {};
+    if (qs) qs.split("&").forEach(p=>{const [k,v]=p.split("="); if(k) params[decodeURIComponent(k)]=decodeURIComponent(v||"")});
+    return { path, params };
+  }
+  function navigate(path){location.hash = "#"+path}
+  function onRoute(){
+    state.route = parseHash();
+    render();
+    window.scrollTo({top:0,behavior:"instant"});
+    closeMobileNav();
+    highlightNav();
+  }
+  window.addEventListener("hashchange", onRoute);
+
+  function highlightNav(){
+    const p = state.route.path;
+    $$(".nav-links a").forEach(a=>{
+      const r = a.getAttribute("data-route");
+      if (!r) return;
+      a.classList.toggle("active", r === p || (r !== "/" && p.startsWith(r)));
+    });
+  }
+  function closeMobileNav(){const n=$("#nav-links");if(n) n.classList.remove("open")}
+  $("#nav-toggle").addEventListener("click", ()=>$("#nav-links").classList.toggle("open"));
+
+  /* ---------- THEME / SETTINGS APPLY ---------- */
+  function applySettings(){
+    const s = state.settings;
+    document.title = `${s.siteName} — ${s.tagline}`;
+    document.documentElement.style.setProperty("--primary", s.colors.primary);
+    document.documentElement.style.setProperty("--accent", s.colors.accent);
+    document.documentElement.style.setProperty("--neon", s.colors.neon || s.colors.accent);
+    $("#brand-name").textContent = s.siteName;
+    const logoMark = $(".logo-mark");
+    if (logoMark){
+      if (s.logo){
+        logoMark.innerHTML = `<img src="${esc(s.logo)}" alt="logo" style="width:100%;height:100%;object-fit:cover;border-radius:10px"/>`;
+      } else {
+        logoMark.innerHTML = (s.siteName || "N").charAt(0).toUpperCase();
+      }
+    }
+    // notice
+    const notice = $("#notice");
+    const noticeText = $("#notice-text");
+    if (s.notice && s.notice.enabled && s.notice.message){
+      notice.classList.remove("hide");
+      noticeText.textContent = s.notice.message;
+      $("#nav").classList.remove("no-notice");
+    } else {
+      notice.classList.add("hide");
+      $("#nav").classList.add("no-notice");
+    }
+    // hero video
+    const v = $("#bg-video");
+    if (s.hero && s.hero.video){
+      if (v.getAttribute("data-src") !== s.hero.video){
+        v.setAttribute("data-src", s.hero.video);
+        v.src = s.hero.video;
+        if (s.hero.poster) v.setAttribute("poster", s.hero.poster);
+        v.play().catch(()=>{});
+      }
+    }
+  }
+
+  /* ---------- FIREBASE SUBSCRIPTIONS ---------- */
+  function subList(path, key, defaults){
+    db.ref(path).on("value", snap => {
+      const arr = objToArr(snap.val());
+      state[key] = arr.length ? arr : clone(defaults);
+      render();
+    }, err => console.warn("sub "+path, err));
+  }
+  function subValue(path, key, defaults, onUpdate){
+    db.ref(path).on("value", snap => {
+      const v = snap.val();
+      state[key] = v ? Object.assign({}, defaults, v, {
+        colors: Object.assign({}, defaults.colors, (v && v.colors) || {}),
+        notice: Object.assign({}, defaults.notice, (v && v.notice) || {}),
+        hero: Object.assign({}, defaults.hero, (v && v.hero) || {}),
+        contact: Object.assign({}, defaults.contact, (v && v.contact) || {}),
+        socials: Object.assign({}, defaults.socials, (v && v.socials) || {}),
+        payment: Object.assign({}, defaults.payment, (v && v.payment) || {})
+      }) : clone(defaults);
+      if (onUpdate) onUpdate();
+      render();
+    }, err => console.warn("sub "+path, err));
+  }
+  function startSubscriptions(){
+    subValue("settings", "settings", DEFAULT_SETTINGS, applySettings);
+    subList("services", "services", DEFAULT_SERVICES);
+    subList("packages", "packages", DEFAULT_PACKAGES);
+    subList("tools", "tools", DEFAULT_TOOLS);
+    subList("team", "team", DEFAULT_TEAM);
+  }
+
+
+  /* ---------- ICONS ---------- */
+  function ic(name, size){
+    const s = size || 18;
+    const map = {
+      arrow:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`,
+      check:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+      play:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>`,
+      ext:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`,
+      mail:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>`,
+      phone:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>`,
+      msg:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>`,
+      pin:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+      send:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>`,
+      card:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>`,
+      ok:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9 12 12 15 17 10"/></svg>`,
+      pencil:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`,
+      trash:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>`,
+      plus:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`,
+      x:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
+      save:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>`,
+      menu:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>`,
+      logout:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>`,
+      user:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+      home:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2h-4v-7H10v7H6a2 2 0 0 1-2-2V9z"/></svg>`,
+      brief:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
+      box:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>`,
+      wrench:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
+      cog:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
+      inbox:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>`,
+      cart:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>`,
+      facebook:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg>`,
+      twitter:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="currentColor"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05A4.28 4.28 0 0 0 16.11 4c-2.37 0-4.29 1.92-4.29 4.29 0 .34.04.66.11.97-3.57-.18-6.73-1.89-8.85-4.48-.37.63-.58 1.37-.58 2.15 0 1.49.76 2.81 1.92 3.58-.71-.02-1.37-.22-1.95-.54v.05c0 2.08 1.48 3.81 3.44 4.21-.36.1-.74.15-1.13.15-.27 0-.54-.03-.8-.07.54 1.7 2.12 2.94 3.99 2.97A8.6 8.6 0 0 1 2 19.54a12.13 12.13 0 0 0 6.56 1.92c7.88 0 12.19-6.53 12.19-12.19 0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.13-2.22z"/></svg>`,
+      instagram:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>`,
+      linkedin:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0z"/></svg>`,
+      youtube:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2c-.3-1.1-1-2-2.1-2.3C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.5C1.5 4.3.8 5.1.5 6.2 0 8 0 12 0 12s0 4 .5 5.8c.3 1.1 1 2 2.1 2.3 1.9.4 9.4.4 9.4.4s7.5 0 9.4-.5c1.1-.3 1.8-1.1 2.1-2.3.5-1.8.5-5.7.5-5.7s0-4-.5-5.8zM9.6 15.6V8.4l6.4 3.6-6.4 3.6z"/></svg>`,
+      github:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.04c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.74.08-.74 1.21.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23A11.5 11.5 0 0 1 12 5.8c1.02.005 2.05.14 3 .41 2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 12 0z"/></svg>`,
+      dot:`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg>`
+    };
+    return map[name] || "";
+  }
+
+  /* ---------- TEMPLATES ---------- */
+  function noticeBarHTML(){return ""}
+
+  function heroHTML(){
+    const s = state.settings;
+    return `
+      <section class="hero container">
+        <div class="reveal">
+          <span class="badge">${esc(s.tagline)}</span>
+          <h1>Build the <span class="neon-text">future</span><br/>of your brand.</h1>
+          <p class="lede">${esc(s.description)}</p>
+          <div class="ctas">
+            <a class="gradient-btn" href="#/contact">Start a project ${ic("arrow",16)}</a>
+            <a class="ghost-btn" href="#/services">Explore services</a>
+          </div>
+          <div class="stats">
+            <div class="stat-tile glass-strong neon-border"><div class="n">120+</div><div class="l">Projects</div></div>
+            <div class="stat-tile glass-strong neon-border"><div class="n">45+</div><div class="l">AI agents</div></div>
+            <div class="stat-tile glass-strong neon-border"><div class="n">98%</div><div class="l">Retention</div></div>
+            <div class="stat-tile glass-strong neon-border"><div class="n">24/7</div><div class="l">Support</div></div>
+          </div>
+        </div>
+      </section>`;
+  }
+
+  function sliderHTML(){
+    return `
+      <section class="sec">
+        <div class="container">
+          <div class="sec-head reveal"><span class="label-up">Why teams choose us</span><h2>Built for what's <span class="neon-text">next</span></h2></div>
+          <div class="slider">
+            ${FEATURE_SLIDES.map(s=>`
+              <div class="slide-card glass-strong neon-border reveal">
+                <div class="ic" style="font-size:22px">${s.ic}</div>
+                <h4>${esc(s.title)}</h4>
+                <p>${esc(s.text)}</p>
+              </div>`).join("")}
+          </div>
+        </div>
+      </section>`;
+  }
+
+  function svcCard(s){
+    return `
+      <a class="card glass-strong neon-border reveal" href="#/services">
+        ${s.image?`<div class="img"><img src="${esc(s.image)}" alt="${esc(s.title)}" loading="lazy"/></div>`:""}
+        <div class="ic">${ic("dot",18)}</div>
+        <h3>${esc(s.title)}</h3>
+        <p class="short">${esc(s.short || s.description || "")}</p>
+        <div class="meta"><span class="muted" style="font-size:12px">Starting</span><span class="price">${fmtBDT(s.startingPrice)}</span></div>
+      </a>`;
+  }
+  function toolCard(t){
+    return `
+      <a class="card glass-strong neon-border reveal" href="#/tools">
+        ${t.cover?`<div class="img"><img src="${esc(t.cover)}" alt="${esc(t.name)}" loading="lazy"/></div>`:""}
+        <span class="pill blue">${esc(t.category||"")}</span>
+        <h3 style="margin-top:10px">${esc(t.name)}</h3>
+        <p class="short">${esc(t.short || t.description || "")}</p>
+        <div class="meta"><span class="muted" style="font-size:12px">${esc(t.pricing||"")}</span><span class="ghost-btn" style="padding:6px 12px;font-size:12px">${ic("play",12)} Demo</span></div>
+      </a>`;
+  }
+  function pkgCard(p){
+    const pages = p.pages === "unlimited" ? "Unlimited pages" : (p.pages > 0 ? `${p.pages} pages` : "Service");
+    return `
+      <div class="card glass-strong neon-border pkg-card ${p.popular?"popular":""} reveal">
+        <span class="pill green">${esc(p.category)}</span>
+        <h3 style="margin-top:10px">${esc(p.name)}</h3>
+        <p class="short">${esc(pages)} · ${esc(p.delivery||"")} delivery</p>
+        <div class="price">${fmtBDT(p.price)}</div>
+        <ul class="feature-list">${(p.features||[]).map(f=>`<li>${esc(f)}</li>`).join("")}</ul>
+        <a class="gradient-btn" href="#/payment?package=${encodeURIComponent(p.slug||p.id||"")}" style="margin-top:14px;width:100%;justify-content:center">Buy ${ic("arrow",14)}</a>
+      </div>`;
+  }
+  function teamCard(m){
+    const ss = m.socials || {};
+    const linksHTML = ["facebook","twitter","instagram","linkedin","github","youtube"]
+      .filter(k=>ss[k]).map(k=>`<a href="${esc(ss[k])}" target="_blank" rel="noopener" aria-label="${k}">${ic(k,14)}</a>`).join("");
+    return `
+      <div class="team-card glass-strong neon-border reveal">
+        <div class="av">${m.avatar?`<img src="${esc(m.avatar)}" alt="${esc(m.name)}" loading="lazy"/>`:`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:rgba(10,132,255,.2);color:var(--neon);font-size:30px">${esc((m.name||"?").charAt(0))}</div>`}</div>
+        <h3>${esc(m.name)}</h3>
+        <div class="role">${esc(m.role||"")}</div>
+        <p class="bio">${esc(m.bio||"")}</p>
+        <div class="socs">${linksHTML}</div>
+      </div>`;
+  }
+
+  /* ---------- USER ROUTES ---------- */
+  function homePage(){
+    const top6 = state.services.slice(0,6);
+    const tools3 = state.tools.slice(0,3);
+    const websitePkgs = state.packages.filter(p=>p.category==="Website").slice(0,3);
+    return `
+      ${heroHTML()}
+      ${sliderHTML()}
+      <section class="sec">
+        <div class="container">
+          <div class="sec-head reveal"><span class="label-up">What we do</span><h2>Services that drive <span class="neon-text">growth</span></h2><p>From a sleek landing page to a multi-tenant SaaS — Nexdiv ships modern, scalable, futuristic products.</p></div>
+          <div class="grid grid-3">${top6.map(svcCard).join("")}</div>
+          <div class="center" style="margin-top:30px"><a href="#/services" class="ghost-btn">See all services ${ic("arrow",14)}</a></div>
+        </div>
+      </section>
+      <section class="sec">
+        <div class="container">
+          <div class="sec-head reveal"><span class="label-up">Our products</span><h2>AI tools & SaaS we <span class="neon-text">built</span></h2></div>
+          <div class="grid grid-3">${tools3.map(toolCard).join("")}</div>
+          <div class="center" style="margin-top:30px"><a href="#/tools" class="ghost-btn">Explore products ${ic("arrow",14)}</a></div>
+        </div>
+      </section>
+      <section class="sec">
+        <div class="container">
+          <div class="sec-head reveal"><span class="label-up">Pricing</span><h2>Packages built for every <span class="neon-text">stage</span></h2></div>
+          <div class="grid grid-3">${websitePkgs.map(pkgCard).join("")}</div>
+          <div class="center" style="margin-top:30px"><a href="#/packages" class="ghost-btn">See all packages ${ic("arrow",14)}</a></div>
+        </div>
+      </section>
+      <section class="sec">
+        <div class="container">
+          <div class="card glass-strong neon-border center reveal" style="padding:50px 26px">
+            <h2 style="font-size:clamp(26px,4.5vw,42px);margin:0 0 10px">Ready to build something <span class="neon-text">extraordinary?</span></h2>
+            <p class="muted" style="max-width:560px;margin:0 auto 22px">Tell us about your idea, your goals, your dream — we'll come back with a plan, a price, and a deadline.</p>
+            <div class="row" style="justify-content:center">
+              <a class="gradient-btn" href="#/contact">Start a project ${ic("arrow",14)}</a>
+              <a class="ghost-btn" href="#/payment">${ic("card",14)} Make a payment</a>
+            </div>
+          </div>
+        </div>
+      </section>`;
+  }
+
+  function servicesPage(){
+    return `
+      <section class="sec container">
+        <div class="sec-head reveal"><span class="label-up">Services</span><h2>Everything you need to <span class="neon-text">win online</span></h2></div>
+        <div class="grid">
+          ${state.services.map((s,i)=>`
+            <article class="card glass-strong neon-border reveal" style="display:grid;grid-template-columns:1fr 1.4fr;gap:0;padding:0;overflow:hidden">
+              ${s.image?`<div class="img" style="border-radius:0;margin:0;aspect-ratio:auto;min-height:240px"><img src="${esc(s.image)}" alt="${esc(s.title)}"/></div>`:""}
+              <div style="padding:24px">
+                <span class="badge">Service ${String(i+1).padStart(2,"0")}</span>
+                <h3 style="font-size:24px;margin:10px 0 6px"><span class="neon-text">${esc(s.title)}</span></h3>
+                <p class="muted" style="font-size:14px;line-height:1.6">${esc(s.description||s.short||"")}</p>
+                <ul class="feature-list">${(s.features||[]).map(f=>`<li>${esc(f)}</li>`).join("")}</ul>
+                <div class="row" style="margin-top:18px">
+                  <div class="grow"><div class="label-up">Starting at</div><div class="price">${fmtBDT(s.startingPrice)}</div></div>
+                  <a class="gradient-btn" href="#/payment?service=${encodeURIComponent(s.slug||s.id||"")}">Order ${ic("arrow",14)}</a>
+                  <a class="ghost-btn" href="#/contact">Discuss</a>
+                </div>
+              </div>
+            </article>`).join("")}
+        </div>
+      </section>`;
+  }
+
+  function toolsPage(){
+    return `
+      <section class="sec container">
+        <div class="sec-head reveal"><span class="label-up">Our products</span><h2>AI agents · SaaS · <span class="neon-text">Browser extensions</span></h2></div>
+        <div>
+          ${state.tools.map((t,i)=>`
+            <article class="card glass-strong neon-border tool-row reveal">
+              <div class="tr-grid">
+                <div class="tr-img">
+                  ${t.cover?`<img src="${esc(t.cover)}" alt="${esc(t.name)}"/>`:""}
+                  <span class="pill blue cat">${esc(t.category||"")}</span>
+                </div>
+                <div class="tr-content">
+                  <span class="label-up">Product ${String(i+1).padStart(2,"0")}</span>
+                  <h3 style="font-size:24px;margin:6px 0 6px"><span class="neon-text">${esc(t.name)}</span></h3>
+                  <p class="muted" style="font-size:14px;line-height:1.6">${esc(t.description||t.short||"")}</p>
+                  <ul class="feature-list">${(t.features||[]).map(f=>`<li>${esc(f)}</li>`).join("")}</ul>
+                  ${(t.screenshots||[]).length?`<div class="screens">${t.screenshots.map(sc=>`<img src="${esc(sc)}" alt="screenshot" loading="lazy"/>`).join("")}</div>`:""}
+                  <div class="row" style="margin-top:18px">
+                    <a class="gradient-btn" href="${esc(t.demoUrl||"#")}" target="_blank" rel="noopener">${ic("play",14)} Live demo</a>
+                    <a class="ghost-btn" href="#/contact">${ic("ext",14)} Get pricing</a>
+                    <span class="grow"></span>
+                    <span class="muted" style="font-weight:700">${esc(t.pricing||"")}</span>
+                  </div>
+                </div>
+              </div>
+            </article>`).join("")}
+        </div>
+      </section>`;
+  }
+
+  function packagesPage(){
+    const cats = ["Website","E-commerce","Marketing","AI"];
+    return `
+      <section class="sec container">
+        <div class="sec-head reveal"><span class="label-up">Packages</span><h2>Plans for every <span class="neon-text">business</span></h2></div>
+        ${cats.map(c=>{
+          const list = state.packages.filter(p=>p.category===c);
+          if (!list.length) return "";
+          return `
+            <div style="margin-bottom:36px">
+              <h3 style="font-size:22px;font-weight:800;margin:0 0 14px"><span class="neon-text">${esc(c)}</span> <span class="muted" style="font-size:12px;font-weight:500"> · ${list.length} package${list.length>1?"s":""}</span></h3>
+              <div class="grid grid-3">${list.map(pkgCard).join("")}</div>
+            </div>`;
+        }).join("")}
+      </section>`;
+  }
+
+  function aboutPage(){
+    return `
+      <section class="sec container">
+        <div class="sec-head reveal"><span class="label-up">About</span><h2>We craft <span class="neon-text">future-built</span> products</h2><p>Nexdiv is a small team of senior engineers, designers, and AI researchers building modern digital products and AI agents for ambitious brands.</p></div>
+        <div class="grid grid-2">
+          ${[
+            {t:"Our Mission",d:"Make world-class digital and AI services accessible to every Bangladeshi business — from startups to enterprises."},
+            {t:"Our Story",d:"Founded in 2023 by a team of senior engineers, designers, and AI researchers. We've shipped 120+ projects across SaaS, e-commerce, AI agents, and marketing."},
+            {t:"Quality",d:"Every line of code is tested, every design is reviewed. We don't ship what we wouldn't use ourselves."},
+            {t:"Speed",d:"We move fast without breaking things. Most projects ship in 7–30 days end-to-end."},
+            {t:"Transparency",d:"You see every commit, every design, every metric. No black boxes."},
+            {t:"Long-term partnership",d:"We're not a one-and-done shop — we keep optimizing your product after launch."}
+          ].map(({t,d})=>`<div class="card glass-strong neon-border reveal"><h3 style="font-size:18px;margin:0 0 6px"><span class="neon-text">${esc(t)}</span></h3><p class="muted" style="font-size:14px;line-height:1.6;margin:0">${esc(d)}</p></div>`).join("")}
+        </div>
+      </section>`;
+  }
+
+  function teamPage(){
+    return `
+      <section class="sec container">
+        <div class="sec-head reveal"><span class="label-up">Our people</span><h2>Meet the <span class="neon-text">team</span></h2><p>A multidisciplinary crew of engineers, designers, marketers and AI researchers.</p></div>
+        <div class="grid grid-3">${state.team.map(teamCard).join("")}</div>
+      </section>`;
+  }
+
+  function contactPage(){
+    const c = state.settings.contact;
+    return `
+      <section class="sec container">
+        <div class="sec-head reveal"><span class="label-up">Contact</span><h2>Let's build something <span class="neon-text">great</span></h2></div>
+        <div class="grid" style="grid-template-columns:1fr 2fr;gap:18px">
+          <aside style="display:flex;flex-direction:column;gap:14px">
+            <div class="card glass-strong neon-border"><div class="ic">${ic("mail",18)}</div><h3 style="margin:0 0 4px;font-size:16px">Email</h3><a class="muted" href="mailto:${esc(c.email)}">${esc(c.email)}</a></div>
+            <div class="card glass-strong neon-border"><div class="ic">${ic("phone",18)}</div><h3 style="margin:0 0 4px;font-size:16px">Phone</h3><a class="muted" href="tel:${esc(c.phone)}">${esc(c.phone)}</a></div>
+            <div class="card glass-strong neon-border"><div class="ic">${ic("msg",18)}</div><h3 style="margin:0 0 4px;font-size:16px">WhatsApp</h3><a class="muted" target="_blank" rel="noopener" href="https://wa.me/${esc((c.whatsapp||"").replace(/\D/g,""))}">${esc(c.whatsapp)}</a></div>
+            <div class="card glass-strong neon-border"><div class="ic">${ic("pin",18)}</div><h3 style="margin:0 0 4px;font-size:16px">Office</h3><span class="muted">${esc(c.address)}</span></div>
+          </aside>
+          <div class="card glass-strong neon-border" style="padding:26px">
+            <h3 style="margin:0 0 14px"><span class="neon-text">Send a message</span></h3>
+            <form id="contact-form">
+              <div class="form-row cols-2">
+                <label class="field"><span class="lbl">Your name <span class="req">*</span></span><input class="input" name="name" required></label>
+                <label class="field"><span class="lbl">Email <span class="req">*</span></span><input class="input" type="email" name="email" required></label>
+              </div>
+              <div class="form-row cols-2" style="margin-top:14px">
+                <label class="field"><span class="lbl">Phone</span><input class="input" name="phone"></label>
+                <label class="field"><span class="lbl">Subject</span><input class="input" name="subject"></label>
+              </div>
+              <label class="field" style="margin-top:14px"><span class="lbl">Message <span class="req">*</span></span><textarea class="textarea" name="message" required></textarea></label>
+              <div id="contact-status" style="margin-top:12px"></div>
+              <button class="gradient-btn" style="margin-top:14px" type="submit">Send message ${ic("send",14)}</button>
+            </form>
+          </div>
+        </div>
+      </section>`;
+  }
+
+  function paymentPage(){
+    const p = state.settings.payment;
+    const pkgSlug = state.route.params.package;
+    const svcSlug = state.route.params.service;
+    let preselType = "package", preselSlug = "", preselAmt = 0;
+    if (pkgSlug){
+      const pk = state.packages.find(x=>(x.slug||x.id)===pkgSlug);
+      if (pk){preselType="package"; preselSlug=pkgSlug; preselAmt=pk.price||0}
+    } else if (svcSlug){
+      const sv = state.services.find(x=>(x.slug||x.id)===svcSlug);
+      if (sv){preselType="service"; preselSlug=svcSlug; preselAmt=sv.startingPrice||0}
+    }
+    return `
+      <section class="sec container">
+        <div class="sec-head reveal"><span class="label-up">Payment</span><h2>Complete your <span class="neon-text">order</span></h2><p>Pay via bKash, Nagad, Rocket or bank transfer. Send the transaction ID below — we verify within 1–2 hours.</p></div>
+        <div class="grid" style="grid-template-columns:1fr 2fr;gap:18px">
+          <aside style="display:flex;flex-direction:column;gap:14px">
+            <div class="method"><div class="ml">bKash</div><div class="mn">${esc(p.bkash)}</div><p>Send Money → use our bKash → copy TrxID below</p></div>
+            <div class="method"><div class="ml">Nagad</div><div class="mn">${esc(p.nagad)}</div><p>Send Money → use our Nagad → copy TrxID below</p></div>
+            <div class="method"><div class="ml">Rocket</div><div class="mn">${esc(p.rocket)}</div><p>Send Money → use our Rocket → copy TrxID below</p></div>
+            <div class="card glass-strong neon-border"><h3 style="margin:0 0 6px;font-size:16px">Bank transfer</h3><p class="muted" style="margin:0;font-size:13px;line-height:1.6">${esc(p.bankName)}<br/>A/C: ${esc(p.bankAccount)}<br/>Branch: ${esc(p.bankBranch)}</p></div>
+          </aside>
+          <div class="card glass-strong neon-border" style="padding:26px">
+            <h3 style="margin:0 0 14px"><span class="neon-text">Submit your payment</span> ${ic("card",18)}</h3>
+            <form id="payment-form" data-prefill-type="${esc(preselType)}" data-prefill-slug="${esc(preselSlug)}" data-prefill-amt="${preselAmt}">
+              <div>
+                <span class="lbl label-up">What are you paying for?</span>
+                <div class="seg" id="pay-seg" style="margin-top:6px">
+                  <button type="button" data-t="package" class="${preselType==="package"?"active":""}">Package</button>
+                  <button type="button" data-t="service" class="${preselType==="service"?"active":""}">Service</button>
+                  <button type="button" data-t="custom" class="${preselType==="custom"?"active":""}">Custom</button>
+                </div>
+              </div>
+              <input type="hidden" name="type" id="pay-type" value="${esc(preselType)}"/>
+              <div id="pay-select-wrap" style="margin-top:14px"></div>
+              <label class="field" style="margin-top:14px"><span class="lbl">Amount (BDT) <span class="req">*</span></span><input class="input" type="number" name="amount" id="pay-amount" required value="${preselAmt||""}"/></label>
+              <div class="form-row cols-2" style="margin-top:14px">
+                <label class="field"><span class="lbl">Your name <span class="req">*</span></span><input class="input" name="name" required></label>
+                <label class="field"><span class="lbl">Email <span class="req">*</span></span><input class="input" type="email" name="email" required></label>
+              </div>
+              <div class="form-row cols-2" style="margin-top:14px">
+                <label class="field"><span class="lbl">Phone <span class="req">*</span></span><input class="input" name="phone" required></label>
+                <label class="field">
+                  <span class="lbl">Method <span class="req">*</span></span>
+                  <select class="select" name="method" required><option value="bKash">bKash</option><option value="Nagad">Nagad</option><option value="Rocket">Rocket</option><option value="Bank">Bank</option></select>
+                </label>
+              </div>
+              <div class="form-row cols-2" style="margin-top:14px">
+                <label class="field"><span class="lbl">Sender number / A/C</span><input class="input" name="senderNumber"></label>
+                <label class="field"><span class="lbl">Transaction ID <span class="req">*</span></span><input class="input" name="trxId" required></label>
+              </div>
+              <label class="field" style="margin-top:14px"><span class="lbl">Notes (optional)</span><textarea class="textarea" name="notes"></textarea></label>
+              <div id="pay-status" style="margin-top:12px"></div>
+              <button class="gradient-btn" style="margin-top:14px" type="submit">Submit payment ${ic("send",14)}</button>
+            </form>
+          </div>
+        </div>
+      </section>`;
+  }
+
+  /* ---------- FOOTER ---------- */
+  function footerHTML(){
+    const s = state.settings;
+    const so = s.socials || {};
+    const links = ["facebook","twitter","instagram","linkedin","youtube","github"]
+      .filter(k=>so[k]).map(k=>`<a href="${esc(so[k])}" target="_blank" rel="noopener" aria-label="${k}">${ic(k,14)}</a>`).join("");
+    return `
+      <div class="container">
+        <div class="foot-grid">
+          <div>
+            <div class="logo"><span class="logo-mark">${s.logo?`<img src="${esc(s.logo)}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:10px"/>`:esc((s.siteName||"N").charAt(0))}</span><span>${esc(s.siteName)}</span></div>
+            <p class="muted" style="font-size:13px;margin:12px 0 0;max-width:340px;line-height:1.6">${esc(s.description)}</p>
+            <div class="socs-foot">${links}</div>
+          </div>
+          <div>
+            <h5>Company</h5>
+            <a href="#/about">About</a><a href="#/team">Team</a><a href="#/contact">Contact</a>
+          </div>
+          <div>
+            <h5>Services</h5>
+            <a href="#/services">Web development</a><a href="#/services">AI agents</a><a href="#/services">SaaS</a><a href="#/services">Marketing</a>
+          </div>
+          <div>
+            <h5>Reach us</h5>
+            <a href="mailto:${esc(s.contact.email)}">${esc(s.contact.email)}</a>
+            <a href="tel:${esc(s.contact.phone)}">${esc(s.contact.phone)}</a>
+            <span class="muted" style="font-size:13px;display:block">${esc(s.contact.address)}</span>
+          </div>
+        </div>
+        <div class="copy">
+          <span>© ${new Date().getFullYear()} ${esc(s.siteName)}. All rights reserved.</span>
+          <span>Built with futuristic vibes.</span>
+        </div>
+      </div>`;
+  }
+
+  /* ---------- RENDER ---------- */
+  function render(){
+    const path = state.route.path;
+    let html = "";
+    if (path === "/") html = homePage();
+    else if (path === "/services") html = servicesPage();
+    else if (path === "/tools") html = toolsPage();
+    else if (path === "/packages") html = packagesPage();
+    else if (path === "/about") html = aboutPage();
+    else if (path === "/team") html = teamPage();
+    else if (path === "/contact") html = contactPage();
+    else if (path === "/payment") html = paymentPage();
+    else html = `<section class="sec container center"><h2>404 — Not found</h2><a class="ghost-btn" href="#/">Back home</a></section>`;
+    $("#app").innerHTML = html;
+    $("#footer").innerHTML = footerHTML();
+    bindAll();
+    revealOnScroll();
+    highlightNav();
+    applySettings();
+  }
+
+  function revealOnScroll(){
+    const els = $$(".reveal");
+    if (!("IntersectionObserver" in window)) { els.forEach(e=>e.classList.add("show")); return; }
+    const io = new IntersectionObserver(entries=>{
+      entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add("show"); io.unobserve(en.target); } });
+    },{threshold:0.12});
+    els.forEach(e=>io.observe(e));
+  }
+
+  /* ---------- EVENT BINDING ---------- */
+  function bindAll(){
+    // contact form
+    const cf = $("#contact-form");
+    if (cf){
+      cf.addEventListener("submit", async e=>{
+        e.preventDefault();
+        const status = $("#contact-status");
+        status.innerHTML = `<div class="alert info"><span class="spinner"></span> Sending...</div>`;
+        const data = Object.fromEntries(new FormData(cf).entries());
+        try {
+          await db.ref("messages").push(Object.assign({},data,{read:false,createdAt:Date.now()}));
+          cf.reset();
+          status.innerHTML = `<div class="alert success">Thanks! We'll reply within 1 business hour.</div>`;
+        } catch(err){
+          status.innerHTML = `<div class="alert error">${esc(err.message||"Failed to send.")}</div>`;
+        }
+      });
+    }
+    // payment form
+    const pf = $("#payment-form");
+    if (pf){
+      const seg = $("#pay-seg");
+      const updateSelect = ()=>{
+        const t = $("#pay-type").value;
+        const wrap = $("#pay-select-wrap");
+        if (t === "custom"){ wrap.innerHTML = ""; return; }
+        const list = t === "package" ? state.packages : state.services;
+        const sel = pf.dataset.prefillSlug;
+        wrap.innerHTML = `
+          <label class="field"><span class="lbl">Choose ${t}</span>
+            <select class="select" name="selected" required id="pay-selected">
+              <option value="">— Select —</option>
+              ${list.map(it=>`<option value="${esc(it.slug||it.id||"")}" ${(it.slug||it.id)===sel?"selected":""}>${esc(it.name||it.title||"")} — ${fmtBDT(it.price||it.startingPrice||0)}</option>`).join("")}
+            </select>
+          </label>`;
+        const sel2 = $("#pay-selected");
+        sel2.addEventListener("change", ()=>{
+          const it = list.find(x=>(x.slug||x.id)===sel2.value);
+          if (it) $("#pay-amount").value = it.price || it.startingPrice || 0;
+        });
+      };
+      seg.addEventListener("click", e=>{
+        const btn = e.target.closest("button[data-t]"); if (!btn) return;
+        $$(".seg button", seg).forEach(b=>b.classList.remove("active"));
+        btn.classList.add("active");
+        $("#pay-type").value = btn.dataset.t;
+        if (btn.dataset.t === "custom") $("#pay-amount").value = "";
+        updateSelect();
+      });
+      updateSelect();
+      pf.addEventListener("submit", async e=>{
+        e.preventDefault();
+        const status = $("#pay-status");
+        status.innerHTML = `<div class="alert info"><span class="spinner"></span> Submitting...</div>`;
+        const data = Object.fromEntries(new FormData(pf).entries());
+        const orderId = `NXD-${Date.now()}-${Math.random().toString(36).slice(2,7).toUpperCase()}`;
+        try {
+          await db.ref("orders").push(Object.assign({},data,{
+            amount: Number(data.amount)||0,
+            orderId, status:"pending_verification", createdAt:Date.now()
+          }));
+          pf.reset();
+          status.innerHTML = `<div class="alert success">Submitted! Order ID: <strong>${orderId}</strong>. We verify within 1–2 hours.</div>`;
+        } catch(err){
+          status.innerHTML = `<div class="alert error">${esc(err.message||"Failed to submit.")}</div>`;
+        }
+      });
+    }
+  }
+
+  /* ---------- BOOT ---------- */
+  startSubscriptions();
+  state.route = parseHash();
+  applySettings();
+  render();
+  </script>
+</body>
+</html>
