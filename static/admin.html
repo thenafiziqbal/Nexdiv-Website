@@ -845,8 +845,9 @@
       btn.addEventListener("click", async ()=>{
         const action = btn.dataset.action;
         const id = btn.dataset.id;
-        const path = state.route.path; // e.g. /admin/services
-        const collection = path.split("/")[2];
+        const path = state.route.path; // /admin/services or /services
+        const parts = path.split("/").filter(Boolean);
+        const collection = parts[0] === "admin" ? parts[1] : parts[0];
         const item = (state[collection]||[]).find(x=>(x.id||x.slug)===id);
         if (action === "delete"){
           if (!confirm("Delete this item?")) return;
@@ -860,7 +861,8 @@
     const addBtn = $("#add-btn");
     if (addBtn){
       addBtn.addEventListener("click", ()=>{
-        const collection = state.route.path.split("/")[2];
+        const parts = state.route.path.split("/").filter(Boolean);
+        const collection = parts[0] === "admin" ? parts[1] : parts[0];
         openEditModal(collection, null);
       });
     }
@@ -869,11 +871,11 @@
       btn.addEventListener("click", async ()=>{
         const act = btn.dataset.act, id = btn.dataset.id;
         const path = state.route.path;
-        if (path === "/admin/orders"){
+        if (path === "/admin/orders" || path === "/orders"){
           if (act === "delete"){ if(!confirm("Delete order?")) return; await db.ref("orders/"+id).remove(); }
           else if (act === "verify") await db.ref("orders/"+id+"/status").set("verified");
           else if (act === "reject") await db.ref("orders/"+id+"/status").set("rejected");
-        } else if (path === "/admin/messages"){
+        } else if (path === "/admin/messages" || path === "/messages"){
           if (act === "delete"){ if(!confirm("Delete message?")) return; await db.ref("messages/"+id).remove(); }
           else if (act === "read") await db.ref("messages/"+id+"/read").set(true);
         }

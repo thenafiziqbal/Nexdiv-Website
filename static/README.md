@@ -51,8 +51,8 @@ The Firebase config is hard-coded inside each HTML file (project: `thegrils-7966
        "packages":  { ".read": true, ".write": "auth != null" },
        "tools":     { ".read": true, ".write": "auth != null" },
        "team":      { ".read": true, ".write": "auth != null" },
-       "orders":    { ".read": "auth != null", ".write": true },
-       "messages":  { ".read": "auth != null", ".write": true }
+       "orders":    { ".read": "auth != null", "$orderId": { ".write": "auth != null || !data.exists()" } },
+       "messages":  { ".read": "auth != null", "$msgId":  { ".write": "auth != null || !data.exists()" } }
      }
    }
    ```
