@@ -469,19 +469,39 @@
     }, err => console.warn("sub "+path, err));
   }
   function startSubscriptions(){
+    // public-readable nodes — safe to subscribe at boot before auth
     subValue("settings", "settings", DEFAULT_SETTINGS, applySettings);
     subList("services", "services", DEFAULT_SERVICES);
     subList("packages", "packages", DEFAULT_PACKAGES);
     subList("tools", "tools", DEFAULT_TOOLS);
     subList("team", "team", DEFAULT_TEAM);
-    db.ref("orders").on("value", snap => { state.orders = objToArr(snap.val()); if (state.route.path.startsWith("/admin")) render(); }, ()=>{});
-    db.ref("messages").on("value", snap => { state.messages = objToArr(snap.val()); if (state.route.path.startsWith("/admin")) render(); }, ()=>{});
+  }
+
+  // auth-required listeners — only attach after sign-in, and detach on sign-out
+  let _authSubsActive = false;
+  function _ordersCb(snap){ state.orders = objToArr(snap.val()); render(); }
+  function _messagesCb(snap){ state.messages = objToArr(snap.val()); render(); }
+  function attachAuthSubscriptions(){
+    if (_authSubsActive) return;
+    _authSubsActive = true;
+    db.ref("orders").on("value", _ordersCb, err => { console.warn("orders sub", err); _authSubsActive = false; });
+    db.ref("messages").on("value", _messagesCb, err => { console.warn("messages sub", err); _authSubsActive = false; });
+  }
+  function detachAuthSubscriptions(){
+    if (!_authSubsActive) return;
+    db.ref("orders").off("value", _ordersCb);
+    db.ref("messages").off("value", _messagesCb);
+    state.orders = [];
+    state.messages = [];
+    _authSubsActive = false;
   }
 
   /* ---------- AUTH ---------- */
   auth.onAuthStateChanged(u => {
     state.user = u;
     state.userLoading = false;
+    if (u) attachAuthSubscriptions();
+    else detachAuthSubscriptions();
     render();
   });
   async function signIn(email, password){return auth.signInWithEmailAndPassword(email, password)}
